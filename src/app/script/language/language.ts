@@ -59,7 +59,7 @@ class LanguageStrings {
     }
 }
 
-export function getLanguage(useLocalStorage?: boolean): string {
+export function getLanguage(): string {
     return 'en';
 }
 
