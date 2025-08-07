@@ -37,7 +37,6 @@ export interface IFilter {
     updatePos: boolean; // changes size/orientation of klCanvas
     icon: string; // image url
     isInstant?: boolean; // default false - if instant no modal
-    inEmbed: boolean; // is available in embed
     getDialog: null | ((p: IFilterGetDialogParam) => any);
     apply: null | ((p: IFilterApply) => boolean);
     darkNoInvert?: boolean;

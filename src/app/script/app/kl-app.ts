@@ -1,7 +1,6 @@
 import { KL } from '../klecks/kl';
 import { BB } from '../bb/bb';
 import { showIframeModal } from '../klecks/ui/modals/show-iframe-modal';
-import { EmbedToolspaceTopRow } from '../embed/embed-toolspace-top-row';
 import {
     IGradient,
     IKlProject,
@@ -72,19 +71,12 @@ import { ERASE_COLOR } from '../klecks/brushes/erase-color';
 
 importFilters();
 
-type KlAppOptionsEmbed = {
-    url: string;
-    enableImageDropperImport?: boolean; // default false
-    onSubmit: (onSuccess: () => void, onError: () => void) => void;
-};
-
 export type TKlAppParams = {
     project?: IKlProject;
     saveReminder?: SaveReminder;
     projectStore?: ProjectStore;
     logoImg?: string; // app logo
     bottomBar?: HTMLElement; // row at bottom of toolspace
-    embed?: KlAppOptionsEmbed;
     app?: {
         imgurKey?: string; // for imgur uploads
     };
@@ -113,7 +105,6 @@ export class KlApp {
     private readonly statusOverlay: StatusOverlay;
     private readonly klCanvas: KlCanvas;
     private uiState: TUiLayout;
-    private readonly embed: undefined | KlAppOptionsEmbed;
     private readonly saveToComputer: SaveToComputer;
     private readonly lineSanitizer: LineSanitizer;
     private readonly easel: Easel<TKlAppToolId>;
@@ -217,20 +208,15 @@ export class KlApp {
     // ----------------------------------- public -----------------------------------
 
     constructor(p: TKlAppParams) {
-        this.embed = p.embed;
         // default 2048, unless your screen is bigger than that (that computer then probably has the horsepower for that)
         // but not larger than 4096 - a fairly arbitrary decision
         const maxCanvasSize = Math.min(
             4096,
             Math.max(2048, Math.max(window.screen.width, window.screen.height)),
         );
-        this.uiState = (
-            this.embed
-                ? 'left'
-                : LocalStorage.getItem('uiState')
-                  ? LocalStorage.getItem('uiState')
-                  : 'right'
-        ) as TUiLayout;
+        this.uiState = (LocalStorage.getItem('uiState')
+            ? LocalStorage.getItem('uiState')
+            : 'right') as TUiLayout;
         const projectStore = p.projectStore;
         this.klRootEl = BB.el({
             className: 'g-root',
@@ -289,7 +275,7 @@ export class KlApp {
             });
         }
 
-        this.klCanvas = new KL.KlCanvas(klHistory, this.embed ? -1 : 1);
+        this.klCanvas = new KL.KlCanvas(klHistory, 1);
         const tempHistory = new KlTempHistory();
         let mainTabRow: TabRow | undefined = undefined;
 
@@ -804,39 +790,37 @@ export class KlApp {
                     event.preventDefault();
                     redo();
                 }
-                if (!this.embed) {
-                    if (['ctrl+s', 'cmd+s'].includes(comboStr)) {
-                        event.preventDefault();
-                        applyUncommitted();
-                        this.saveToComputer.save();
-                    }
-                    if (['ctrl+shift+s', 'cmd+shift+s'].includes(comboStr)) {
-                        event.preventDefault();
-                        applyUncommitted();
-                        (async () => {
-                            let success = true;
-                            try {
-                                await projectStore!.store(this.klCanvas.getProject());
-                            } catch (e) {
-                                success = false;
-                                setTimeout(() => {
-                                    throw new Error(
-                                        'keyboard-shortcut: failed to store browser storage, ' + e,
-                                    );
-                                }, 0);
-                                this.statusOverlay.out('❌ ' + LANG('file-storage-failed'), true);
-                            }
-                            if (success) {
-                                p.saveReminder!.reset();
-                                this.statusOverlay.out(LANG('file-storage-stored'), true);
-                            }
-                        })();
-                    }
-                    if (['ctrl+c', 'cmd+c'].includes(comboStr)) {
-                        event.preventDefault();
-                        applyUncommitted();
-                        copyToClipboard(true);
-                    }
+                if (['ctrl+s', 'cmd+s'].includes(comboStr)) {
+                    event.preventDefault();
+                    applyUncommitted();
+                    this.saveToComputer.save();
+                }
+                if (['ctrl+shift+s', 'cmd+shift+s'].includes(comboStr)) {
+                    event.preventDefault();
+                    applyUncommitted();
+                    (async () => {
+                        let success = true;
+                        try {
+                            await projectStore!.store(this.klCanvas.getProject());
+                        } catch (e) {
+                            success = false;
+                            setTimeout(() => {
+                                throw new Error(
+                                    'keyboard-shortcut: failed to store browser storage, ' + e,
+                                );
+                            }, 0);
+                            this.statusOverlay.out('❌ ' + LANG('file-storage-failed'), true);
+                        }
+                        if (success) {
+                            p.saveReminder!.reset();
+                            this.statusOverlay.out(LANG('file-storage-stored'), true);
+                        }
+                    })();
+                }
+                if (['ctrl+c', 'cmd+c'].includes(comboStr)) {
+                    event.preventDefault();
+                    applyUncommitted();
+                    copyToClipboard(true);
                 }
                 if (['ctrl+a', 'cmd+a'].includes(comboStr)) {
                     event.preventDefault();
@@ -1023,104 +1007,27 @@ export class KlApp {
             this.mobileUi.getElement(),
         ]);
 
-        let toolspaceTopRow;
-        if (this.embed) {
-            toolspaceTopRow = new EmbedToolspaceTopRow({
-                onHelp: () => {
-                    showIframeModal(this.embed!.url + '/help.html', !!this.embed);
-                },
-                onSubmit: () => {
-                    applyUncommitted();
-                    const onFailure = () => {
-                        let closeFunc: () => void;
-                        const saveBtn = BB.el({
-                            tagName: 'button',
-                            textContent: LANG('save-reminder-save-psd'),
-                            css: {
-                                display: 'block',
-                            },
-                        });
-                        saveBtn.onclick = () => {
-                            this.saveAsPsd();
-                            closeFunc();
-                        };
-                        KL.popup({
-                            target: this.klRootEl,
-                            message: '<b>' + LANG('upload-failed') + '</b>',
-                            div: BB.el({
-                                content: [
-                                    BB.el({
-                                        content: LANG('backup-drawing'),
-                                        css: {
-                                            marginBottom: '10px',
-                                        },
-                                    }),
-                                    saveBtn,
-                                ],
-                            }),
-                            ignoreBackground: true,
-                            closeFunc: (f) => {
-                                closeFunc = f;
-                            },
-                        });
-                    };
-
-                    KL.popup({
-                        target: this.klRootEl,
-                        message: LANG('submit-prompt'),
-                        buttons: [LANG('submit'), 'Cancel'],
-                        callback: async (result) => {
-                            if (result !== LANG('submit')) {
-                                return;
-                            }
-
-                            const overlay = BB.el({
-                                parent: this.klRootEl,
-                                className: 'upload-overlay',
-                                content: '<div class="spinner"></div> ' + LANG('submit-submitting'),
-                            });
-
-                            this.embed!.onSubmit(
-                                () => {
-                                    p.saveReminder!.reset();
-                                    overlay.remove();
-                                },
-                                () => {
-                                    overlay.remove();
-                                    onFailure();
-                                },
-                            );
-                        },
-                    });
-                },
-                onLeftRight: () => {
-                    this.uiState = this.uiState === 'left' ? 'right' : 'left';
-                    this.updateUi();
-                },
-            });
-        } else {
-            toolspaceTopRow = new KL.ToolspaceTopRow({
-                logoImg: p.logoImg!,
-                onLogo: () => {
-                    showIframeModal('./home/', !!this.embed);
-                },
-                onNew: () => {
-                    showNewImageDialog();
-                },
-                onImport: () => {
-                    fileUi!.triggerImport();
-                },
-                onSave: () => {
-                    this.saveToComputer.save();
-                },
-                onShare: () => {
-                    shareImage();
-                },
-                onHelp: () => {
-                    showIframeModal('./help/', !!this.embed);
-                },
-            });
-        }
+        const toolspaceTopRow = new KL.ToolspaceTopRow({
+            logoImg: p.logoImg!,
+            onLogo: () => {
+                showIframeModal('./home/', false);
+            },
+            onNew: () => {
+                showNewImageDialog();
+            },
+            onImport: () => {
+                fileUi!.triggerImport();
+            },
+            onSave: () => {
+                this.saveToComputer.save();
+            },
+            onShare: () => {
+                shareImage();
+            },
+            onHelp: () => {
+                showIframeModal('./help/', false);
+            },
+        });
         toolspaceTopRow.getElement().style.marginBottom = '10px';
         this.toolspaceInner.append(toolspaceTopRow.getElement());
 
@@ -1455,7 +1362,7 @@ export class KlApp {
             maxCanvasSize,
             klCanvas: this.klCanvas,
             getCurrentLayer: () => currentLayer,
-            isEmbed: !!this.embed,
+            isEmbed: false,
             statusOverlay: this.statusOverlay,
             onCanvasChanged: () => {
                 this.easelProjectUpdater.update();
@@ -1548,58 +1455,54 @@ export class KlApp {
             );
         };
 
-        const fileUi = this.embed
-            ? null
-            : new KL.FileUi({
-                  klRootEl: this.klRootEl,
-                  projectStore: projectStore!,
-                  getProject: () => this.klCanvas.getProject(),
-                  exportType: exportType,
-                  onExportTypeChange: (type) => {
-                      exportType = type;
-                  },
-                  onFileSelect: (files, optionsStr) =>
-                      importHandler.handleFileSelect(files, optionsStr),
-                  onSaveImageToComputer: () => {
-                      applyUncommitted();
-                      this.saveToComputer.save();
-                  },
-                  onNewImage: showNewImageDialog,
-                  onShareImage: (callback) => {
-                      applyUncommitted();
-                      shareImage(callback);
-                  },
-                  onUpload: () => {
-                      // on upload
-                      applyUncommitted();
-                      KL.imgurUpload(
-                          this.klCanvas,
-                          this.klRootEl,
-                          p.saveReminder!,
-                          p.app && p.app.imgurKey ? p.app.imgurKey : '',
-                      );
-                  },
-                  onCopyToClipboard: () => {
-                      applyUncommitted();
-                      copyToClipboard();
-                  },
-                  onPaste: () => importHandler.readClipboard(),
-                  saveReminder: p.saveReminder,
-                  applyUncommitted: () => applyUncommitted(),
-                  onChangeShowSaveDialog: (b) => {
-                      this.saveToComputer.setShowSaveDialog(b);
-                  },
-              });
+        const fileUi = new KL.FileUi({
+            klRootEl: this.klRootEl,
+            projectStore: projectStore!,
+            getProject: () => this.klCanvas.getProject(),
+            exportType: exportType,
+            onExportTypeChange: (type) => {
+                exportType = type;
+            },
+            onFileSelect: (files, optionsStr) =>
+                importHandler.handleFileSelect(files, optionsStr),
+            onSaveImageToComputer: () => {
+                applyUncommitted();
+                this.saveToComputer.save();
+            },
+            onNewImage: showNewImageDialog,
+            onShareImage: (callback) => {
+                applyUncommitted();
+                shareImage(callback);
+            },
+            onUpload: () => {
+                // on upload
+                applyUncommitted();
+                KL.imgurUpload(
+                    this.klCanvas,
+                    this.klRootEl,
+                    p.saveReminder!,
+                    p.app && p.app.imgurKey ? p.app.imgurKey : '',
+                );
+            },
+            onCopyToClipboard: () => {
+                applyUncommitted();
+                copyToClipboard();
+            },
+            onPaste: () => importHandler.readClipboard(),
+            saveReminder: p.saveReminder,
+            applyUncommitted: () => applyUncommitted(),
+            onChangeShowSaveDialog: (b) => {
+                this.saveToComputer.setShowSaveDialog(b);
+            },
+        });
 
         const settingsUi = new KL.SettingsUi({
             onLeftRight: () => {
                 this.uiState = this.uiState === 'left' ? 'right' : 'left';
                 this.updateUi();
-                if (!this.embed) {
-                    LocalStorage.setItem('uiState', this.uiState);
-                }
+                LocalStorage.setItem('uiState', this.uiState);
             },
-            saveReminder: this.embed ? undefined : p.saveReminder,
+            saveReminder: p.saveReminder,
             customAbout: p.aboutEl,
         });
 
@@ -1838,10 +1741,9 @@ export class KlApp {
             uiState: this.uiState,
         });
 
-        if (!this.embed) {
-            Object.defineProperty(window, 'KL', {
-                value: createConsoleApi({
-                    onDraw: (path: IVector2D[]): void => {
+        Object.defineProperty(window, 'KL', {
+            value: createConsoleApi({
+                onDraw: (path: IVector2D[]): void => {
                         if (!path || path.length === 0) {
                             return;
                         }
@@ -1857,7 +1759,6 @@ export class KlApp {
                 }),
                 writable: false,
             });
-        }
 
         this.resize(this.uiWidth, this.uiHeight);
         this.updateUi();
@@ -1880,10 +1781,9 @@ export class KlApp {
             },
         );
 
-        if (!this.embed || this.embed.enableImageDropperImport) {
-            new KL.KlImageDropper({
-                target: document.body,
-                onDrop: (files, optionStr) => {
+        new KL.KlImageDropper({
+            target: document.body,
+            onDrop: (files, optionStr) => {
                     if (KL.dialogCounter.get() > 0) {
                         return;
                     }
@@ -1895,12 +1795,11 @@ export class KlApp {
                 },
             });
 
-            window.document.addEventListener(
-                'paste',
-                (e: ClipboardEvent) => importHandler.onPaste(e),
-                false,
-            );
-        }
+        window.document.addEventListener(
+            'paste',
+            (e: ClipboardEvent) => importHandler.onPaste(e),
+            false,
+        );
 
         {
             window.addEventListener('resize', () => {
@@ -2012,9 +1911,7 @@ export class KlApp {
 
     swapUiLeftRight(): void {
         this.uiState = this.uiState === 'left' ? 'right' : 'left';
-        if (!this.embed) {
-            LocalStorage.setItem('uiState', this.uiState);
-        }
+        LocalStorage.setItem('uiState', this.uiState);
         this.updateUi();
     }
 
