@@ -1,7 +1,6 @@
-import { english, languages, loadLanguage, TTranslationCode } from '../../languages/languages';
-import { LocalStorage } from '../bb/base/local-storage';
+import { english } from './english';
 
-export const LS_LANGUAGE_KEY = 'klecks-language';
+export type TTranslationCode = keyof typeof english;
 
 class LanguageStrings {
     private data: any;
@@ -10,17 +9,12 @@ class LanguageStrings {
 
     // ----------------------------------- public -----------------------------------
     constructor() {
-        // need to use setLanguage for a different language
         this.data = { ...english };
         this.code = 'en';
     }
 
     async setLanguage(langCode: string): Promise<void> {
-        if (langCode === 'en') {
-            this.data = { ...english };
-        } else {
-            this.data = { ...english, ...(await loadLanguage(langCode)) };
-        }
+        this.data = { ...english };
         this.code = langCode;
         document.documentElement.setAttribute('lang', langCode);
         this.listeners.forEach((item) => {
@@ -36,16 +30,11 @@ class LanguageStrings {
     }
 
     getLanguage(): { code: string; name: string } {
-        return languages.find((item) => {
-            return item.code === this.code;
-        })!;
+        return { code: 'en', name: 'English' };
     }
 
     getAutoLanguage(): { code: string; name: string } {
-        const autoCode = getLanguage(false);
-        return languages.find((item) => {
-            return item.code === autoCode;
-        })!;
+        return { code: 'en', name: 'English' };
     }
 
     getCode(): string {
@@ -71,40 +60,7 @@ class LanguageStrings {
 }
 
 export function getLanguage(useLocalStorage?: boolean): string {
-    let result: string = 'en';
-
-    const langs: string[] = []; // from highest to lowest priority
-    const navLangs = navigator.languages ? navigator.languages : [navigator.language];
-    navLangs.forEach((item) => {
-        const split = item.split('-');
-        langs.push(item);
-        if (split.length === 2) {
-            langs.push(split[0]);
-        }
-    });
-
-    if (useLocalStorage) {
-        try {
-            const item = LocalStorage.getItem(LS_LANGUAGE_KEY);
-            if (item) {
-                langs.unshift(item);
-            }
-        } catch (e) {
-            // likely cookies disabled in Safari
-        }
-    }
-
-    for (let i = 0; i < langs.length; i++) {
-        const lang = langs[i];
-        const found = languages.find((item) => {
-            return item.code.toLowerCase() === lang.toLowerCase();
-        });
-        if (found) {
-            result = found.code;
-            break;
-        }
-    }
-    return result;
+    return 'en';
 }
 
 const activeLanguageCode = getLanguage(true);

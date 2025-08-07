@@ -8,6 +8,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Recommended",
-  "exclude": ["languages"]
+  "display": "Recommended"
 }

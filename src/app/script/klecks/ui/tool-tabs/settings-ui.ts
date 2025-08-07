@@ -30,65 +30,6 @@ export class SettingsUi {
             },
         });
 
-        // ---- language ----
-        const autoLanguage = languageStrings.getAutoLanguage();
-
-        const langWrapper = BB.el({
-            parent: this.rootEl,
-            content: BB.el({
-                content: LANG('settings-language') + ':',
-                css: {
-                    marginRight: '5px',
-                    marginBottom: '2px',
-                },
-            }),
-            css: {
-                display: 'flex',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-            },
-        });
-
-        const options: [string, string][] = [
-            ['auto', LANG('auto') + ` → ${autoLanguage.name} (${autoLanguage.code})`] as [
-                string,
-                string,
-            ],
-            ...languages.map((item) => {
-                return [item.code, item.name + ` (${item.code})`] as [string, string];
-            }),
-        ];
-        const languageSelect = new KL.Select({
-            initValue: nullToUndefined(
-                LocalStorage.getItem(LS_LANGUAGE_KEY)
-                    ? LocalStorage.getItem(LS_LANGUAGE_KEY)
-                    : 'auto',
-            ),
-            optionArr: options,
-            onChange: (val) => {
-                if (val === 'auto') {
-                    LocalStorage.removeItem(LS_LANGUAGE_KEY);
-                } else {
-                    LocalStorage.setItem(LS_LANGUAGE_KEY, val);
-                }
-                languageHint.style.display = 'block';
-            },
-        });
-        BB.css(languageSelect.getElement(), {
-            flexGrow: '1',
-        });
-        const languageHint = BB.el({
-            className: 'kl-toolspace-note',
-            content: LANG('settings-language-reload'),
-            css: {
-                display: 'none',
-                marginTop: '5px',
-                flexGrow: '1',
-            },
-        });
-
-        langWrapper.append(languageSelect.getElement(), languageHint);
-
         // ---- theme ----
         function themeToLabel(theme: TTheme): string {
             return theme === 'dark' ? '⬛ ' + LANG('theme-dark') : '⬜ ' + LANG('theme-light');
@@ -254,19 +195,6 @@ export class SettingsUi {
                 }),
             );
         }
-
-        window.addEventListener('storage', (e) => {
-            if (e.key !== LS_LANGUAGE_KEY) {
-                return;
-            }
-            languageSelect.setValue(
-                nullToUndefined(
-                    LocalStorage.getItem(LS_LANGUAGE_KEY)
-                        ? LocalStorage.getItem(LS_LANGUAGE_KEY)
-                        : 'auto',
-                ),
-            );
-        });
     }
 
     getElement(): HTMLElement {
