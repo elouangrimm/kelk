@@ -1,13 +1,17 @@
 @use 'vars' as v;
 @use 'sass:color';
+@use 'sass:map';
 
 // --- Theme Generation ---
 
 // Light Theme Palette
 $light-theme: (
   'primary': v.$primary-color,
+  'primary-hover': color.scale(v.$primary-color, $lightness: -10%),
   'on-primary': #FFFFFF,
   'primary-container': color.scale(v.$primary-color, $lightness: 80%),
+  'primary-container-hover': color.scale(v.$primary-color, $lightness: 75%),
+  'primary-container-active': color.scale(v.$primary-color, $lightness: 70%),
   'on-primary-container': color.scale(v.$primary-color, $lightness: -60%),
   'secondary': color.adjust(v.$primary-color, $hue: 60deg),
   'on-secondary': #FFFFFF,
@@ -37,8 +41,11 @@ $light-theme: (
 // Dark Theme Palette
 $dark-theme: (
   'primary': color.scale(v.$primary-color, $lightness: 40%),
+  'primary-hover': color.scale(v.$primary-color, $lightness: 30%),
   'on-primary': color.scale(v.$primary-color, $lightness: -20%),
   'primary-container': color.scale(v.$primary-color, $lightness: -30%),
+  'primary-container-hover': color.scale(v.$primary-color, $lightness: -25%),
+  'primary-container-active': color.scale(v.$primary-color, $lightness: -20%),
   'on-primary-container': color.scale(v.$primary-color, $lightness: 70%),
   'secondary': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: 40%),
   'on-secondary': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: -20%),
@@ -47,7 +54,7 @@ $dark-theme: (
   'tertiary': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: 40%),
   'on-tertiary': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: -20%),
   'tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: -30%),
-  'on-tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: 70%),
+  'on-tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: 70%), $lightness: -60%),
   'error': #F2B8B5,
   'on-error': #601410,
   'error-container': #8C1D18,
@@ -68,8 +75,10 @@ $dark-theme: (
 
 // Mixin to apply a theme
 @mixin apply-theme($theme-map) {
-  color-scheme: if(map-get($theme-map, 'background') == #141218, 'dark', 'light');
+  color-scheme: if(map.get($theme-map, 'background') == #141218, 'dark', 'light');
   @each $key, $value in $theme-map {
     --color-#{$key}: #{$value};
+    // Provide an RGB version for using with alpha transparency
+    --color-#{$key}-rgb: #{color.red($value)}, #{color.green($value)}, #{color.blue($value)};
   }
 }

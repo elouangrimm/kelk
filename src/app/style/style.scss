@@ -79,10 +79,10 @@ button {
     cursor: pointer;
     transition: background-color 0.2s;
     &:hover {
-        background-color: color.scale(var(--color-primary-container), $lightness: -10%);
+        background-color: var(--color-primary-container-hover);
     }
     &:active {
-        background-color: color.scale(var(--color-primary-container), $lightness: -20%);
+        background-color: var(--color-primary-container-active);
     }
     &:disabled {
         background-color: rgba(var(--color-on-surface-rgb), 0.12);
@@ -95,7 +95,7 @@ button {
     background-color: var(--color-primary);
     color: var(--color-on-primary);
     &:hover {
-        background-color: color.scale(var(--color-primary), $lightness: -10%);
+        background-color: var(--color-primary-hover);
     }
 }
 
@@ -214,11 +214,6 @@ button {
     }
 }
 
-// ... other styles, refactored similarly ...
-// Due to the complexity and length of the original CSS, this is a condensed example.
-// The principle is to replace every color with a variable from the theme.
-// For example:
-// .info-hint from the original becomes:
 .info-hint {
     background: var(--color-error-container);
     border: 1px solid var(--color-error);
@@ -227,7 +222,6 @@ button {
     padding: 16px;
 }
 
-// .kl-text-error
 .kl-text-error {
     color: var(--color-error);
 }
