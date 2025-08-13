@@ -1,529 +1,406 @@
 /* --- entrypoint for app ---*/
-@use 'sass:color';
 @use 'vars';
-@use 'dark';
+@use './dark';
 
-// --- Color Palette Generation (Light Theme) ---
-$active-highlight-color: color.scale(vars.$primary-color, $lightness: 10%);
-$body-bg-color: color.scale(color.adjust(vars.$primary-color, $saturation: -85%), $lightness: 48%);
-$ui-bg-color: color.scale(color.adjust(vars.$primary-color, $saturation: -90%), $lightness: 40%);
-$text-color: color.adjust(color.scale(vars.$primary-color, $lightness: -65%), $saturation: -80%);
-$text-color-light: color.adjust(color.scale(vars.$primary-color, $lightness: -55%), $saturation: -80%);
-$text-color-link-visited: color.adjust(color.scale(vars.$primary-color, $lightness: -25%), $saturation: -50%);
-$border-color: color.adjust(color.scale(vars.$primary-color, $lightness: -5%), $saturation: -80%);
-$border-color-light: color.adjust(color.scale(vars.$primary-color, $lightness: 25%), $saturation: -80%);
-$shadow-color: rgba(color.adjust(color.scale(vars.$primary-color, $lightness: -95%), $saturation: -90%), 0.2);
-$shadow-color-light: rgba(color.adjust(color.scale(vars.$primary-color, $lightness: -95%), $saturation: -90%), 0.05);
-$button-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -95%), $lightness: 50%);
-$button-hover-bg: #fff;
-$button-active-bg: $ui-bg-color;
-$button-disabled-bg: $ui-bg-color;
-$button-disabled-text: color.adjust(color.scale(vars.$primary-color, $lightness: 10%), $saturation: -80%);
-$activated-bg: #fff;
-$tab-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -80%), $lightness: 68%);
-$tab-active-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -80%), $lightness: 85%);
-$popup-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -80%), $lightness: 42%);
-$popup-overlay-bg: rgba(color.adjust(color.scale(vars.$primary-color, $lightness: -70%), $saturation: -50%), 0.5);
-$input-bg: #fff;
-$input-border: color.adjust(color.scale(vars.$primary-color, $lightness: 20%), $saturation: -80%);
-$input-focus-border: color.adjust(color.scale(vars.$primary-color, $lightness: -20%), $saturation: -80%);
-$option-color: rgba($text-color, 0.6);
-$option-border: rgba($text-color, 0.3);
-$option-hover-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -90%), $lightness: 45%);
+// The styles below will only apply if the user's OS is set to a light theme.
+@media (prefers-color-scheme: light) {
+    :root {
+        --active-highlight-color: #{vars.$activeHighlightColor};
+        --body-bg-color: #f0f0f0;
+        --kl-color: #{vars.$klColor};
+        --ui-bg-color: #dddddd;
+    }
 
-$info-hint-base-color: color.adjust(vars.$primary-color, $hue: -220deg);
-$info-hint-bg: color.scale($info-hint-base-color, $lightness: 30%);
-$info-hint-border: color.scale($info-hint-base-color, $lightness: -10%);
+    body {
+        color-scheme: light;
+        background-color: var(--body-bg-color);
+        color: #333;
+    }
 
-$note-base-color: color.adjust(vars.$primary-color, $hue: -170deg);
-$note-color: color.adjust(color.scale($note-base-color, $lightness: -20%), $saturation: -20%);
-$note-bg: rgba($note-base-color, 0.5);
-$note-border: color.scale($note-base-color, $lightness: -10%);
-$file-no-autosave-bg: color.scale($note-base-color, $lightness: 40%);
+    a:link,
+    a:not([href]) {
+        color: var(--kl-color);
+    }
+    a:visited {
+        color: #536184;
+    }
+    a:hover,
+    a:not([href]):hover {
+        color: #000;
+    }
 
+    .kl-select {
+        background: #fff;
+    }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+    .grid-hr {
+        border-top: 1px solid rgba(0, 0, 0, 0.15);
+    }
 
-body {
-    overflow: hidden;
-    font-size: 16px;
-    overscroll-behavior-x: none;
-    color-scheme: light;
-    background-color: $body-bg-color;
-    color: $text-color;
-}
+    .kl-toolspace {
+        background-color: var(--ui-bg-color);
+    }
 
-body,
-html {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    touch-action: none;
-    text-size-adjust: none;
-    -webkit-text-size-adjust: none;
-    -moz-text-size-adjust: none;
-    -ms-text-size-adjust: none;
-}
+    .kl-toolspace--left {
+        border-right: 1px solid rgb(135, 135, 135);
+    }
 
-.g-root {
-    font-size: 16px;
-    font-family: system-ui, sans-serif;
-}
+    .kl-toolspace--right {
+        border-left: 1px solid rgb(135, 135, 135);
+    }
 
-a:link,
-a:not([href]) {
-    color: vars.$primary-color;
-    text-decoration: underline;
-    cursor: pointer;
-}
-a:visited {
-    color: $text-color-link-visited;
-    text-decoration: underline;
-}
+    .kl-toolspace-row {
+        background: none;
+        box-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.1),
+            0 1px #cecece;
+    }
 
-a:hover,
-a:not([href]):hover {
-    color: #000;
-    text-decoration: underline;
-}
+    .toolspace-row-button-hover {
+        background: rgba(255, 255, 255, 0.7);
+    }
 
-.kl-select {
-    background: $input-bg;
-}
+    .toolspace-row-button:active,
+    .toolspace-triangle-button:active {
+        background-color: #ddd;
+    }
 
-.grid-hr {
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    clear: both;
-}
+    .toolspace-svg-triangle-button-hover {
+        fill: rgba(255, 255, 255, 0.7);
+    }
 
-.kl-toolspace {
-    background-color: $ui-bg-color;
-}
+    .toolspace-svg-triangle-button:active {
+        fill: #ddd;
+    }
 
-.kl-toolspace--left {
-    border-right: 1px solid $border-color;
-}
+    .toolspace-row-button-activated {
+        background: #fff;
+        box-shadow: inset 0 2px 0 0 var(--active-highlight-color);
+    }
 
-.kl-toolspace--right {
-    border-left: 1px solid $border-color;
-}
+    .kl-tool-row-border-right {
+        border-right: 1px solid rgb(212, 212, 212);
+    }
 
-.kl-toolspace-row {
-    background-color: $ui-bg-color;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px $border-color;
-}
+    .kl-color-picker__h,
+    .kl-color-picker__sv,
+    .kl-color-picker__preview {
+        box-shadow: 0 0 0 1px rgb(188, 188, 188);
+    }
 
-.toolspace-row-button-hover {
-    background: rgba(255, 255, 255, 0.7);
-}
+    .kl-color-picker--active {
+        box-shadow: 0 0 0 1px #fff;
+    }
 
-.toolspace-row-button:active,
-.toolspace-triangle-button:active {
-    background-color: $button-active-bg;
-    box-shadow: inset 2px 2px 10px $shadow-color !important;
-}
+    .kl-color-picker__secondary {
+        box-shadow: 0 0 0 1px rgb(188, 188, 188);
+    }
 
-.toolspace-svg-triangle-button-hover {
-    fill: rgba(255, 255, 255, 0.7);
-}
+    .color-picker-preview-button-hover {
+        background-color: #fff;
+    }
 
-.toolspace-svg-triangle-button:active {
-    fill: $button-active-bg;
-    filter: url(#innershadow);
-}
+    .color-picker-preview-button-active {
+        background-color: #fff;
+        box-shadow: inset 0 2px 0 0 var(--active-highlight-color);
+    }
 
-.toolspace-row-button-activated {
-    background: $activated-bg;
-    box-shadow: inset 0 2px 0 0 $active-highlight-color;
-    pointer-events: none;
-}
+    .slider-wrapper {
+        background: #a8a8a8;
+        color: #333;
+    }
 
-.kl-tool-row-border-right {
-    border-right: 1px solid $border-color-light;
-}
+    .slider-wrapper--active {
+        background: #888888;
+        color: #000;
+    }
 
-.kl-color-picker__h,
-.kl-color-picker__sv,
-.kl-color-picker__preview {
-    box-shadow: 0 0 0 1px $border-color;
-}
+    .slider-inner {
+        background-color: #f0f0f0;
+        background-image: none;
+    }
 
-.kl-color-picker--active {
-    box-shadow: 0 0 0 1px #fff;
-    z-index: 1;
-}
+    .kl-point-slider__line {
+        background: #aaa;
+    }
 
-.kl-color-picker__secondary {
-    box-shadow: 0 0 0 1px $border-color;
-}
+    .kl-point-slider__point {
+        background-color: #eaeaea;
+    }
 
-.slider-wrapper {
-    border-radius: 8px;
-    box-shadow: 0.5px 1px 0 0 rgba(255, 255, 255, 0.8);
-    background-color: $button-bg;
-    color: $text-color;
-    cursor: ew-resize;
-}
+    button {
+        color: #666;
+        background-color: #f3f3f3;
+        background-image: none;
+    }
 
-.slider-wrapper--active {
-    background-color: $button-active-bg;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
-    color: #000;
-}
+    button:hover {
+        background-color: #fff;
+        color: #777;
+    }
 
-.slider-inner {
-    background-color: #fff;
-    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3), 2px 2px 6px rgba(145, 145, 145, 0.49);
-    border-radius: 6px 0 0 0;
-}
+    button:active {
+        background-color: #ddd;
+    }
 
-.kl-point-slider__line {
-    height: 2px;
-    background: $border-color;
-}
+    button:disabled {
+        color: #999;
+        background-color: #ddd;
+        background-image: none;
+    }
 
-.kl-point-slider__point {
-    background-color: $button-bg;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-}
+    .kl-button-primary {
+        background: var(--kl-color);
+        color: #fff;
+    }
+    .kl-button-primary:hover {
+        background-image: none;
+        background-color: lighten(vars.$klColor, 10%);
+        color: #fff;
+    }
+    .kl-button-primary:active {
+        background-image: none;
+        background-color: lighten(vars.$klColor, 5%);
+        color: #fff;
+    }
 
-button {
-    padding: 5px;
-    min-width: 30px;
-    font-size: 15px;
-    line-height: 17px;
-    color: $text-color-light;
-    border: none;
-    background-color: $button-bg;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px $shadow-color-light, 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px $shadow-color-light;
-    user-select: none;
-    -webkit-user-select: none;
-}
+    .kl-popup {
+        background: rgba(50, 50, 50, 0.5);
+    }
 
-button:hover {
-    background-color: $button-hover-bg;
-    color: $text-color-light;
-    cursor: pointer;
-}
+    .kl-popup-box {
+        background-color: #ddd;
+    }
 
-button:active {
-    background-color: $button-active-bg;
-    box-shadow: inset 2px 2px 10px $shadow-color, 0 2px 2px $button-active-bg;
-}
+    .kl-d-modal-root {
+        background: rgba(0, 0, 0, 0.45);
+    }
 
-button:disabled {
-    padding: 5px;
-    min-width: 30px;
-    font-size: 15px;
-    color: $button-disabled-text;
-    border: none;
-    background-color: $button-disabled-bg;
-    border-radius: 4px;
-    cursor: default;
-    box-shadow: 0 0 0 1px $shadow-color-light;
-}
+    .kl-d-modal {
+        background: #eee;
+    }
 
-.kl-button-primary {
-    background: vars.$primary-color;
-    color: #fff;
-}
-.kl-button-primary:hover,
-.kl-button-primary:active {
-    background: $active-highlight-color;
-    color: #fff;
-    box-shadow: unset;
-}
+    .kl-checkbox--highlight {
+        background: #bed5ff;
+    }
 
-.kl-popup {
-    background: $popup-overlay-bg;
-}
+    .kl-checkbox__inner {
+        color: rgba(0, 0, 0, 0.6);
+    }
 
-.kl-popup-box {
-    background-color: $popup-bg;
-    box-shadow: rgba(0, 0, 0, 0.45) 0 5px 60px;
-}
-
-.kl-d-modal-root {
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.kl-d-modal {
-    background: $popup-bg;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 60px;
-}
-
-.kl-checkbox--highlight {
-    background: color.scale($active-highlight-color, $lightness: 40%);
-}
-
-.kl-checkbox__inner {
-    color: rgba(0, 0, 0, 0.6);
-    &:hover {
+    .kl-checkbox__inner:hover {
         color: rgba(0, 0, 0, 1);
     }
-}
 
-.kl-layer {
-    background-color: $ui-bg-color;
-    border: 1px solid $border-color;
-    .kl-layer__label,
-    .kl-layer__opacity-label {
-        color: $text-color;
-    }
-}
+    .kl-layer {
+        background-color: rgb(220, 220, 220);
+        border: 1px solid rgb(158, 158, 158);
+        background-image: none;
 
-.kl-layer--selected {
-    background: #fff;
-    border: 1px solid $active-highlight-color;
-    .kl-layer__label {
-        color: #000;
-    }
-}
-
-.info-hint {
-    background: $info-hint-bg;
-    border: 1px solid $info-hint-border;
-}
-
-textarea,
-input {
-    border: 1px solid $input-border;
-    background: $input-bg;
-}
-
-textarea:focus,
-input:focus {
-    border: 1px solid $input-focus-border;
-    box-shadow: 0 0 10px $shadow-color;
-    background: #fff;
-}
-
-.kl-textarea::placeholder,
-.kl-input::placeholder {
-    color: color.adjust(color.scale($text-color, $lightness: 40%), $saturation: -50%);
-}
-
-.tabrow {
-    background: $tab-bg;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-}
-
-.tabrow__tab:active:not(.tabrow__tab--opened-accented, .tabrow__tab--opened) {
-    box-shadow: inset 0 1px rgba(0,0,0,0.3);
-}
-
-.tabrow__tab--opened,
-.tabrow__tab--opened-accented {
-    background-color: $tab-active-bg;
-}
-
-.tabrow__tab--opened-accented {
-    box-shadow: inset 0 2px 0 0 $active-highlight-color;
-}
-
-.tabrow__tab__rounding-left,
-.tabrow__tab__rounding-right {
-    background: $tab-active-bg;
-}
-
-.kl-option {
-    background: $ui-bg-color;
-    color: $option-color;
-    box-shadow: inset 0 0 0 1px $option-border;
-    &:not(.kl-option-selected) {
-        &:hover {
-            background: $option-hover-bg;
-        }
-        &:active {
-            box-shadow: inset 0 0 0 2px $option-border;
+        .kl-layer__label,
+        .kl-layer__opacity-label {
+            color: #666;
         }
     }
-}
 
-.kl-option-selected {
-    background: #fff;
-    color: #000;
-    box-shadow: inset 0 0 0 2px $active-highlight-color;
-}
+    .kl-layer--selected {
+        background: #fff;
+        border: 1px solid var(--active-highlight-color);
 
-.kl-box-toggle {
-    color: $option-color;
-    box-shadow: inset 0 0 0 1px $option-border;
-    &:not(.kl-box-toggle--active) {
-        &:hover {
-            background: $option-hover-bg;
-        }
-        &:active {
-            box-shadow: inset 0 0 0 2px $option-border;
+        .kl-layer__label {
+            color: #000;
         }
     }
-}
 
-.kl-box-toggle--active {
-    background: #fff;
-    color: #000;
-    box-shadow: inset 0 0 0 2px $active-highlight-color;
-}
-
-.kl-color-option {
-    box-shadow: 0 0 0 1px $border-color;
-    &:not(.kl-color-option--active):active {
-        box-shadow: 0 0 0 2px $border-color;
+    .info-hint {
+        background: rgb(255, 132, 115);
+        border: 1px solid #d00000;
     }
-}
 
-.kl-color-option--active {
-    box-shadow: 0 0 0 2px $active-highlight-color, 0 0 5px 0 $active-highlight-color;
-}
-
-.tool-dropdown-wrapper {
-    background: $button-bg;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-.tool-dropdown-button:hover {
-    background: #fff;
-}
-
-.tool-dropdown-button:active {
-    background-color: $button-active-bg;
-    box-shadow: inset 2px 2px 10px $shadow-color;
-}
-
-.image-toggle:not(.image-toggle-active) {
-    box-shadow: $border-color 0 0 0 1px;
-    &:hover {
+    textarea,
+    input {
         background: #fff;
     }
-    &:active {
-        box-shadow: $border-color 0 0 0 2px;
+
+    textarea:focus,
+    input:focus {
+        background: #fff;
     }
-}
-.image-toggle-active {
-    box-shadow: $active-highlight-color 0 0 0 2px;
-    background-color: #fff;
-}
 
-.kl-scroller {
-    background-color: rgba($body-bg-color, 0.9);
-}
+    .popup-x {
+        filter: brightness(0.9);
+    }
+    .popup-x:hover {
+        filter: brightness(0.5);
+    }
 
-.kl-2-tabs {
-    .kl-2-tabs__left,
-    .kl-2-tabs__right {
-        border: 1px solid rgba(0, 0, 0, 0.6);
+    .brush-alpha--selected {
+        background-color: #fff;
+    }
+
+    .tabrow {
+        background: none;
+        border-bottom: 1px solid #dcdcdc;
+    }
+
+    .tabrow__tab-hover {
+        background-color: #fff;
+    }
+
+    .tabrow__tab--opened,
+    .tabrow__tab--opened-accented {
+        background-color: #f5f5f5;
+    }
+
+    .tabrow__tab__rounding-left,
+    .tabrow__tab__rounding-right {
+        background: #f5f5f5;
+    }
+
+    .kl-option {
+        background: var(--ui-bg-color);
         color: rgba(0, 0, 0, 0.6);
-        &:hover {
-            background: $option-hover-bg;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+
+        &:not(.kl-option-selected):hover {
+            background: #eee;
         }
     }
-    .kl-2-tabs--active {
-        color: #000;
+
+    .kl-option-selected {
         background: #fff;
-        border: 1px solid $active-highlight-color;
-        &:hover {
-            background: #fff;
+        color: #000;
+        box-shadow: inset 0 0 0 2px var(--active-highlight-color);
+    }
+
+    .kl-box-toggle {
+        color: rgba(0, 0, 0, 0.6);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+
+        &:not(.kl-box-toggle--active):hover {
+            background: #eee;
         }
     }
-}
 
-.kl-layer-preview {
-    color: $text-color-light;
-    canvas {
-        box-shadow: 0 0 0 1px $border-color;
+    .kl-box-toggle--active {
+        background: #fff;
+        color: #000;
+        box-shadow: inset 0 0 0 2px var(--active-highlight-color);
     }
-}
 
-.kl-edit-crop-preview {
-    border-top: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
-}
-
-.kl-text-error {
-    color: #f00;
-}
-
-.kl-file-no-autosave {
-    background: $file-no-autosave-bg;
-    color: rgba(0, 0, 0, 0.65);
-}
-
-.kl-preview-wrapper {
-    background-color: $body-bg-color;
-    box-shadow: inset 0 1px $shadow-color, inset 0 -1px $shadow-color;
-}
-
-.kl-preview-wrapper__canvas {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-.kl-transparent-preview {
-    box-shadow: inset 0 1px $shadow-color, inset 0 -1px $shadow-color;
-}
-
-.kl-transparent-preview__canvas,
-.kl-merge-preview {
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-}
-
-.kl-stabilizer {
-    color: rgba(0, 0, 0, 0.6);
-}
-
-.kl-toolspace-note,
-.kl-import-note {
-    color: $note-color;
-    background: $note-bg;
-    border: 1px solid $note-border;
-}
-
-.kl-curves-graph {
-    canvas {
-        background: $ui-bg-color;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+    .kl-color-option {
+        box-shadow: 0 0 0 1px #aaa;
     }
-}
 
-.kl-curves-graph__grip {
-    background: #fff;
-    box-shadow: inset 0 0 0 2px #000;
-}
+    .kl-color-option--active {
+        box-shadow:
+            0 0 0 2px var(--active-highlight-color),
+            0 0 5px 0 var(--active-highlight-color);
+    }
 
-.kl-storage-preview {
-    box-shadow: inset 0 0 0 1px $border-color;
-    background: $ui-bg-color;
-    color: $text-color-light;
-}
+    .tool-dropdown-wrapper {
+        background: rgb(241, 241, 241);
+    }
 
-.kl-storage-preview__im {
-    box-shadow: 0 0 0 1px $border-color;
-}
+    .tool-dropdown-button:hover {
+        background: #fff;
+    }
 
-.kl-info-btn {
-    box-shadow: inset 0 0 0 1px #000;
-}
+    .tool-dropdown-button:active {
+        background-color: #ddd;
+    }
 
-.kl-overlay-toolspace {
-    background: $ui-bg-color;
-    border: 1px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+    .image-toggle:not(.image-toggle-active):hover {
+        background: #fff;
+    }
 
-.kl-file-save-wrapper {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
-}
+    .image-toggle-active {
+        background-color: #fff;
+    }
 
-.kl-dropdown-menu {
-    background: $ui-bg-color;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
+    .kl-2-tabs {
+        .kl-2-tabs__left,
+        .kl-2-tabs__right {
+            border: 1px solid rgba(0, 0, 0, 0.6);
+            color: rgba(0, 0, 0, 0.6);
+            &:hover {
+                background: #eee;
+            }
+        }
 
-.kl-pinch-overlay {
-    background: rgba(255, 255, 255, 0.5);
+        .kl-2-tabs--active {
+            color: #000;
+            background: #fff;
+            border: 1px solid var(--active-highlight-color);
+            &:hover {
+                background: #fff;
+            }
+        }
+    }
+    
+    .kl-layer-preview {
+        color: #555;
+        canvas {
+            box-shadow: 0 0 0 1px #9e9e9e;
+        }
+    }
+
+    .kl-edit-crop-preview {
+        border-top: 1px solid #bbb;
+        border-bottom: 1px solid #bbb;
+    }
+
+    .kl-text-error {
+        color: #f00;
+    }
+
+    .kl-file-no-autosave {
+        background: rgb(243, 243, 161);
+        color: rgba(0, 0, 0, 0.65);
+    }
+
+    .kl-preview-wrapper {
+        background-color: #9e9e9e;
+    }
+
+    .kl-toolspace-note {
+        color: #534a3c;
+        background: rgba(255, 255, 0, 0.5);
+        border: 1px solid #e7d321;
+    }
+
+    .kl-import-note {
+        background: rgba(255, 255, 0, 0.5);
+        border: 1px solid #e7d321;
+    }
+
+    .kl-curves-graph canvas {
+        background: #c6c6c6;
+    }
+
+    .kl-curves-graph__grip {
+        background: #fff;
+    }
+
+    .kl-storage-preview {
+        box-shadow: inset 0 0 0 1px #aaa;
+        background: #cdcdcd;
+        color: #545454;
+    }
+    
+    .kl-storage-preview__im {
+        box-shadow: 0 0 0 1px #aaa;
+    }
+
+    .kl-info-btn {
+        box-shadow: inset 0 0 0 1px #000;
+    }
+
+    .kl-dropdown-menu {
+        background: #ddd;
+    }
+
+    .kl-pinch-overlay {
+        background: rgba(255, 255, 255, 0.5);
+    }
 }

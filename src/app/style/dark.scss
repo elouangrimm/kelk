@@ -1,342 +1,371 @@
-// dark.scss
-@use 'sass:color';
-@use 'vars';
-
-// --- Color Palette Generation (Dark Theme) ---
-$primary-color: vars.$primary-color;
-$active-highlight-color: color.scale($primary-color, $lightness: 10%);
-$dark-body-bg: #212121;
-$dark-ui-bg: #333;
-$dark-text-color: #ccc;
-$dark-text-color-light: #fff;
-$dark-border-color: #626262;
-$dark-border-color-light: #303030;
-$dark-shadow-color: #252525;
-$dark-button-bg: #4a4a4a;
-$dark-button-hover-bg: #555;
-$dark-button-active-bg: #585858;
-$dark-button-disabled-text: #999;
-$dark-activated-bg: #6e6e6e;
-$dark-tab-bg: #2c2c2c;
-$dark-tab-active-bg: #6e6e6e;
-$dark-popup-overlay-bg: rgba(color.adjust(color.scale($primary-color, $lightness: -85%), $saturation: -90%), 0.63);
-$dark-input-bg: #333;
-$dark-input-focus-bg: #222;
-$dark-input-border: #666;
-$dark-option-bg: $dark-ui-bg;
-$dark-option-hover-bg: #444;
-$dark-option-active-border: #666;
-$dark-option-selected-bg: #606060;
-$dark-option-border: #606060;
-
-$dark-info-hint-base-color: color.adjust($primary-color, $hue: -220deg, $saturation: -30%);
-$dark-info-hint-border: color.scale($dark-info-hint-base-color, $lightness: -20%);
-$dark-info-hint-text: color.scale($dark-info-hint-base-color, $lightness: 20%);
-
-$dark-note-base-color: color.adjust(vars.$primary-color, $hue: -170deg);
-$dark-note-color: color.adjust(color.scale($dark-note-base-color, $lightness: 25%), $saturation: -20%);
-$dark-file-no-autosave-color: color.scale($dark-note-base-color, $lightness: 24%);
-
+:root {
+    --primary-color: #2a64f8;
+    --bg-color: #212121;
+    --ui-bg-color: #2c2c2c;
+    --ui-hover-color: #383838;
+    --ui-active-color: #444444;
+    --border-color: #444444;
+    --text-color: #ccc;
+    --text-strong-color: #ffffff;
+    --active-highlight-color: var(--primary-color);
+    --kl-color: var(--primary-color);
+    --ui-bg-dark: var(--ui-bg-color);
+}
 
 body.kl-theme-dark {
     color-scheme: dark;
-    color: $dark-text-color;
-    background: $dark-body-bg;
-
-    a:link,
-    a:not([href]),
-    a:visited {
-        color: color.scale($primary-color, $lightness: 30%);
-
-        &:hover {
-            color: color.scale($primary-color, $lightness: 60%);
-        }
-    }
+    color: var(--text-color);
+    background: var(--bg-color);
 
     .kl-toolspace {
-        background: $dark-ui-bg;
+        background: var(--ui-bg-color);
     }
 
     .kl-toolspace--left {
-        border-right: 1px solid $dark-border-color;
+        border-right: 1px solid var(--border-color);
     }
 
     .kl-toolspace--right {
-        border-left: 1px solid $dark-border-color;
+        border-left: 1px solid var(--border-color);
     }
 
     .kl-toolspace-row {
-        background: $dark-ui-bg;
-        box-shadow: 0 1px 1px $dark-shadow-color;
+        background: none;
+        box-shadow: 0 1px 1px #1a1a1a;
     }
 
     .toolspace-row-button-activated {
-        background: $dark-activated-bg;
+        background: var(--primary-color);
+        color: var(--text-strong-color);
     }
 
-    .toolspace-row-button-hover {
-        background: $dark-button-hover-bg;
+    .toolspace-row-button-hover,
+    .toolspace-row-button:hover {
+        background: var(--ui-hover-color);
     }
 
     .toolspace-row-button:active {
-        background: $dark-button-active-bg;
+        background: var(--ui-active-color);
     }
 
     .toolspace-svg-triangle-button-hover {
-        fill: $dark-button-hover-bg;
+        fill: var(--ui-hover-color);
     }
 
     .toolspace-svg-triangle-button:active {
-        fill: $dark-button-active-bg;
+        fill: var(--ui-active-color);
     }
 
     .toolspace-row-button__submit:hover {
-        background: $active-highlight-color;
+        background: lighten(var(--primary-color), 10%);
     }
 
     .tabrow {
-        background: $dark-tab-bg;
-        border-bottom: 1px solid $dark-activated-bg;
+        background: none;
+        border-bottom: 1px solid var(--border-color);
     }
 
     .tabrow__tab {
-        color: $dark-text-color-light;
+        color: var(--text-strong-color);
     }
 
     .tabrow__tab--opened,
     .tabrow__tab--opened-accented {
-        background-color: $dark-tab-active-bg;
+        background-color: var(--ui-bg-color);
+    }
+    
+    .tabrow__tab--opened-accented {
+        box-shadow: inset 0 2px 0 0 var(--primary-color);
+    }
+
+    .tabrow__tab div {
+        filter: brightness(0.75);
     }
 
     .tabrow__tab:not(.tabrow__tab--opened, .tabrow__tab--opened-accented):hover {
-        background-color: $dark-button-hover-bg;
+        background-color: var(--ui-hover-color);
     }
-    
+
+    .tabrow__tab:active:not(.tabrow__tab--opened-accented, .tabrow__tab--opened) {
+        box-shadow: inset 0 1px #999;
+    }
+
     .tabrow__tab__rounding-left,
     .tabrow__tab__rounding-right {
-        background: $dark-tab-active-bg;
+        background: var(--ui-bg-color);
     }
 
     .kl-tool-row-border-right {
-        border-right: 1px solid $dark-border-color-light;
+        border-right: 1px solid var(--border-color);
     }
 
     .tool-dropdown-wrapper {
-        background-color: $dark-button-active-bg;
+        background-color: var(--ui-bg-color);
     }
 
     .tool-dropdown-button:hover {
-        background: #808080;
+        background: var(--ui-hover-color);
     }
 
     .tool-dropdown-button:active {
-        background: $dark-button-active-bg;
+        background: var(--ui-active-color);
     }
 
-    .kl-popup, .kl-d-modal-root {
-        background: $dark-popup-overlay-bg;
+    .kl-popup {
+        background: rgba(0, 0, 0, 0.6);
     }
 
-    .kl-popup-box, .kl-d-modal {
-        background-color: $dark-ui-bg;
-        box-shadow: 0 0 0 1px $dark-border-color;
+    .kl-popup-box,
+    .kl-d-modal {
+        background-color: var(--ui-bg-color);
+        box-shadow: 0 0 0 1px var(--border-color);
+    }
+
+    .kl-d-modal-root {
+        background: rgba(0, 0, 0, 0.6);
     }
 
     button {
-        color: $dark-text-color;
-        background-color: $dark-button-bg;
+        color: var(--text-color);
+        background-color: #4a4a4a;
+        background-image: none;
         box-shadow: none;
     }
 
     button:hover {
-        background-color: $dark-button-hover-bg;
-        color: $dark-text-color-light;
+        background-color: #555;
+        color: var(--text-strong-color);
     }
 
     button:active {
-        background-color: $dark-button-active-bg;
-        color: $dark-text-color-light;
+        background-color: #555;
+        color: var(--text-strong-color);
         box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 
     button:disabled {
-        color: $dark-button-disabled-text;
+        color: #999;
         background-color: transparent;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+        background-image: none;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+        pointer-events: none;
     }
 
     .kl-button-primary {
-        background: $primary-color;
-        color: #fff;
+        background: var(--primary-color);
+        color: var(--text-strong-color);
+
         &:hover {
-            background: $active-highlight-color;
+            background-image: none;
+            background-color: lighten(var(--primary-color), 10%);
         }
     }
-    
+
+    button:not(.kl-button-primary, .kl-button-cancel) img:not(.dark-no-invert) {
+        filter: invert(1) hue-rotate(180deg);
+    }
+
     input,
     textarea {
-        background: $dark-input-bg;
-        color: $dark-text-color;
-        border-color: $dark-input-border;
+        background: var(--ui-bg-color);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
     }
 
     input:focus,
     textarea:focus {
-        background: $dark-input-focus-bg;
-        color: #fff;
+        background: var(--bg-color);
+        color: var(--text-strong-color);
+        border-color: var(--primary-color);
     }
 
     .kl-select {
-        background: $dark-input-focus-bg;
-        color: #fff;
-        border: 2px solid $dark-input-border;
+        background: var(--bg-color);
+        color: var(--text-strong-color);
+        border: 1px solid var(--border-color);
     }
 
     .kl-checkbox__inner {
-        color: $dark-text-color;
+        color: var(--text-color);
         &:hover {
-            color: #fff;
+            color: var(--text-strong-color);
         }
     }
 
     .kl-checkbox--highlight {
         background: none;
-        box-shadow: 0 0 0 1px $active-highlight-color;
+        box-shadow: 0 0 0 1px var(--primary-color);
     }
 
     .kl-option {
-        background: $dark-option-bg;
-        color: $dark-text-color;
-        box-shadow: inset 0 0 0 1px $dark-option-border;
+        background: var(--ui-bg-color);
+        color: var(--text-color);
+        box-shadow: inset 0 0 0 1px var(--border-color);
 
         &:not(.kl-option-selected):hover {
-            background: $dark-option-hover-bg;
+            background: var(--ui-hover-color);
         }
 
         &:not(.kl-option-selected):active {
-            box-shadow: inset 0 0 0 2px $dark-option-active-border;
+            box-shadow: inset 0 0 0 2px var(--border-color);
         }
     }
 
     .kl-option-selected {
-        background: $dark-option-selected-bg;
-        color: #fff;
-        box-shadow: inset 0 0 0 2px $active-highlight-color;
+        background: var(--ui-active-color);
+        color: var(--text-strong-color);
+        box-shadow: inset 0 0 0 2px var(--primary-color);
     }
 
     .kl-box-toggle {
-        color: $dark-text-color;
-        box-shadow: inset 0 0 0 1px $dark-option-border;
+        color: var(--text-color);
+        box-shadow: inset 0 0 0 1px var(--border-color);
+
         &:not(.kl-box-toggle--active) {
             &:hover {
-                background: $dark-option-hover-bg;
+                background: var(--ui-hover-color);
             }
             &:active {
-                box-shadow: inset 0 0 0 2px $dark-option-active-border;
+                box-shadow: inset 0 0 0 2px var(--border-color);
             }
         }
     }
 
     .kl-box-toggle--active {
-        color: #fff;
-        background: $dark-option-selected-bg;
-        box-shadow: inset 0 0 0 2px $active-highlight-color;
+        color: var(--text-strong-color);
+        background: var(--ui-active-color);
+        box-shadow: inset 0 0 0 2px var(--primary-color);
+    }
+
+    .dark-invert {
+        filter: invert(1);
     }
 
     .kl-file-no-autosave {
         background: transparent;
-        color: $dark-file-no-autosave-color;
+        color: #c9b184;
         box-shadow: inset 0 0 0 1px;
     }
 
     .slider-wrapper {
-        background: $dark-input-focus-bg;
-        box-shadow: 0 0 0 1px #777;
-        color: $dark-text-color;
+        background: #222;
+        box-shadow: 0 0 0 1px var(--border-color);
+        color: var(--text-color);
+        text-shadow: none;
+
         .slider-inner {
-            background: $dark-button-hover-bg;
-            box-shadow: 1px 0 0 #777;
+            background: #555;
+            box-shadow: 1px 0 0 var(--border-color);
         }
     }
 
     .slider-wrapper--active {
-        box-shadow: 0 0 0 1px #aaa;
-        color: #fff;
+        box-shadow: 0 0 0 1px var(--primary-color);
+        color: var(--text-strong-color);
+
         .slider-inner {
-            box-shadow: 1px 0 0 #aaa;
+            box-shadow: 1px 0 0 var(--primary-color);
         }
     }
 
     .slider-wrapper--disabled {
         box-shadow: none;
-        color: $dark-button-disabled-text;
+        color: #999;
     }
 
     .info-hint {
         background: none;
-        border: 1px solid $dark-info-hint-border;
-        color: $dark-info-hint-text;
+        border: 1px solid #a66969;
+        color: #f5a7a7;
     }
 
     .kl-2-tabs {
         .kl-2-tabs__left,
         .kl-2-tabs__right {
-            border: 1px solid rgba(113, 112, 112, 0.3);
-            color: $dark-text-color;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-bottom: none;
             &:hover {
-                background: $dark-option-hover-bg;
+                background: var(--ui-hover-color);
             }
         }
+
         .kl-2-tabs--active {
-            color: #fff;
-            background: $dark-option-hover-bg;
-            border: 1px solid $active-highlight-color;
-            &:hover {
-                background: $dark-option-hover-bg;
-            }
+            color: var(--text-strong-color);
+            background: var(--ui-active-color);
+            border: 1px solid var(--primary-color);
+            border-bottom: none;
+        }
+    }
+
+    .popup-x {
+        filter: invert(1);
+        &:hover {
+            filter: invert(1) brightness(1.4);
         }
     }
 
     .kl-preview-wrapper {
-        background: $dark-body-bg;
-        box-shadow: inset 0 1px $dark-border-color, inset 0 -1px $dark-border-color;
+        background: var(--bg-color);
+        box-shadow:
+            inset 0 1px var(--border-color),
+            inset 0 -1px var(--border-color);
+
         .kl-preview-wrapper__canvas {
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
         }
     }
 
-    .kl-edit-crop-preview {
-        border-top: 1px solid $dark-border-color;
-        border-bottom: 1px solid $dark-border-color;
+    .kl-edit-crop-preview,
+    .kl-transparent-preview {
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: none;
     }
 
-    .kl-transparent-preview {
-        box-shadow: inset 0 1px $dark-border-color, inset 0 -1px $dark-border-color;
-        .kl-transparent-preview__canvas {
-            box-shadow: 0 0 0 1px #777;
-        }
+    .kl-transparent-preview .kl-transparent-preview__canvas {
+        box-shadow: 0 0 0 1px var(--border-color);
     }
 
     .kl-merge-preview {
-        box-shadow: 0 0 0 1px $dark-border-color;
+        box-shadow: 0 0 0 1px var(--border-color);
+    }
+
+    a:link,
+    a:not([href]),
+    a:visited {
+        color: #64acff;
+
+        &:hover {
+            color: #b2e8ff;
+        }
     }
 
     .kl-color-picker__h,
     .kl-color-picker__sv,
     .kl-color-picker__preview {
-        box-shadow: 0 0 0 1px #646464;
+        box-shadow: 0 0 0 1px var(--border-color);
     }
 
     .kl-color-picker--active {
-        box-shadow: 0 0 0 1px #999;
+        box-shadow: 0 0 0 1px var(--primary-color);
     }
 
     .kl-color-picker__secondary {
         box-shadow: 0 0 0 1px #7a7a7a;
     }
-    
+
+    .kl-stabilizer {
+        color: var(--text-color);
+    }
+
+    .brush-alpha,
+    .brush-alpha--selected {
+        filter: invert(1) hue-rotate(180deg);
+    }
+
     .kl-layer-preview {
-        color: $dark-text-color;
+        color: var(--text-color);
         canvas {
             box-shadow: 0 0 0 1px #7a7a7a;
         }
@@ -345,8 +374,15 @@ body.kl-theme-dark {
     .kl-import-note,
     .kl-toolspace-note {
         background: none;
-        color: $dark-note-color;
-        border: 1px solid $dark-note-color;
+        color: #d5d558;
+        border: 1px solid #d5d558;
+    }
+
+    .kl-curves-graph {
+        canvas {
+            background: #dedede;
+            filter: invert(1) hue-rotate(180deg);
+        }
     }
 
     .kl-curves-graph__grip {
@@ -355,17 +391,17 @@ body.kl-theme-dark {
     }
 
     .kl-storage-preview {
-        background: $dark-body-bg;
-        box-shadow: inset 0 0 0 1px $dark-button-active-bg;
+        background: #212121;
+        box-shadow: inset 0 0 0 1px var(--border-color);
         color: #aaa;
     }
 
     .kl-storage-preview__im {
-        box-shadow: 0 0 0 1px $dark-button-active-bg;
+        box-shadow: 0 0 0 1px var(--border-color);
     }
 
     .kl-info-btn {
-        box-shadow: inset 0 0 0 1px #ffff;
+        box-shadow: inset 0 0 0 1px var(--text-strong-color);
     }
 
     .kl-layer {
@@ -373,15 +409,16 @@ body.kl-theme-dark {
         border: 1px solid #4f4f4f;
         .kl-layer__label,
         .kl-layer__opacity-label {
-            color: $dark-text-color;
+            color: var(--text-color);
         }
     }
 
     .kl-layer--selected {
-        background: $dark-button-hover-bg;
-        border: 1px solid $active-highlight-color;
+        background: var(--ui-hover-color);
+        border: 1px solid var(--primary-color);
+
         .kl-layer__label {
-            color: #fff;
+            color: var(--text-strong-color);
         }
     }
 
@@ -393,14 +430,20 @@ body.kl-theme-dark {
         box-shadow: none;
     }
 
+    .kl-overlay-toolspace {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
     .kl-overlay-toolspace__color {
-        box-shadow: 0 0 0 1px $dark-activated-bg;
+        box-shadow: 0 0 0 1px var(--border-color);
     }
 
     .image-toggle {
         &:not(.image-toggle-active) {
             &:hover {
-                background: $dark-option-selected-bg;
+                background: var(--ui-hover-color);
             }
             &:active {
                 box-shadow: #838383 0 0 0 2px;
@@ -409,13 +452,18 @@ body.kl-theme-dark {
     }
 
     .image-toggle-active {
-        background: $dark-option-selected-bg;
+        background: var(--ui-hover-color);
     }
 
-    .kl-file-save-wrapper, .grid-hr {
-        border-color: rgba(255,255,255,0.2);
+    .kl-file-save-wrapper {
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
     }
-    
+
+    .grid-hr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: none;
+    }
+
     .kl-color-option {
         box-shadow: 0 0 0 1px #7a7a7a;
         &:not(.kl-color-option--active):active {
@@ -424,7 +472,9 @@ body.kl-theme-dark {
     }
 
     .kl-color-option--active {
-        box-shadow: 0 0 0 2px $active-highlight-color, 0 0 5px 0 $active-highlight-color;
+        box-shadow:
+            0 0 0 2px var(--primary-color),
+            0 0 5px 0 var(--primary-color);
     }
 
     .kl-text-error {
@@ -432,7 +482,7 @@ body.kl-theme-dark {
     }
 
     .kl-dropdown-menu {
-        background: $dark-ui-bg;
+        background: var(--ui-bg-color);
     }
 
     .kl-pinch-overlay {
