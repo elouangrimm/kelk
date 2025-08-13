@@ -1,7 +1,7 @@
 /* --- entrypoint for app ---*/
 @use 'sass:color';
 @use 'vars';
-@use 'dark'; // Applies dark theme overrides
+@use 'dark';
 
 // --- Color Palette Generation (Light Theme) ---
 $active-highlight-color: color.scale(vars.$primary-color, $lightness: 10%);
@@ -24,14 +24,23 @@ $tab-bg: color.scale(desaturate(vars.$primary-color, 80%), $lightness: 68%);
 $tab-active-bg: color.scale(desaturate(vars.$primary-color, 80%), $lightness: 85%);
 $popup-bg: color.scale(desaturate(vars.$primary-color, 80%), $lightness: 42%);
 $popup-overlay-bg: rgba(desaturate(color.scale(vars.$primary-color, $lightness: -70%), 50%), 0.5);
-$info-hint-bg: color.scale(adjust(vars.$primary-color, $hue: -220deg), $lightness: 30%);
-$info-hint-border: color.scale(adjust(vars.$primary-color, $hue: -220deg), $lightness: -10%);
 $input-bg: #fff;
 $input-border: desaturate(color.scale(vars.$primary-color, $lightness: 20%), 80%);
 $input-focus-border: desaturate(color.scale(vars.$primary-color, $lightness: -20%), 80%);
 $option-color: rgba($text-color, 0.6);
 $option-border: rgba($text-color, 0.3);
 $option-hover-bg: color.scale(desaturate(vars.$primary-color, 90%), $lightness: 45%);
+
+$info-hint-base-color: adjust(vars.$primary-color, $hue: -220deg);
+$info-hint-bg: color.scale($info-hint-base-color, $lightness: 30%);
+$info-hint-border: color.scale($info-hint-base-color, $lightness: -10%);
+
+$note-base-color: adjust(vars.$primary-color, $hue: -170deg);
+$note-color: desaturate(color.scale($note-base-color, $lightness: -20%), 20%);
+$note-bg: rgba($note-base-color, 0.5);
+$note-border: color.scale($note-base-color, $lightness: -10%);
+$file-no-autosave-bg: color.scale($note-base-color, $lightness: 40%);
+
 
 *,
 *::before,
@@ -442,7 +451,7 @@ input:focus {
 }
 
 .kl-file-no-autosave {
-    background: color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 40%);
+    background: $file-no-autosave-bg;
     color: rgba(0, 0, 0, 0.65);
 }
 
@@ -470,9 +479,9 @@ input:focus {
 
 .kl-toolspace-note,
 .kl-import-note {
-    color: desaturate(color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: -20%), 20%);
-    background: rgba(adjust(vars.$primary-color, $hue: -170deg), 0.5);
-    border: 1px solid color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: -10%);
+    color: $note-color;
+    background: $note-bg;
+    border: 1px solid $note-border;
 }
 
 .kl-curves-graph {

@@ -20,8 +20,6 @@ $dark-activated-bg: #6e6e6e;
 $dark-tab-bg: #2c2c2c;
 $dark-tab-active-bg: #6e6e6e;
 $dark-popup-overlay-bg: rgba(desaturate(color.scale($primary-color, $lightness: -85%), 90%), 0.63);
-$dark-info-hint-border: color.scale(adjust($primary-color, $hue: -220deg, $saturation: -30%), $lightness: -20%);
-$dark-info-hint-text: color.scale(adjust($primary-color, $hue: -220deg, $saturation: -30%), $lightness: 20%);
 $dark-input-bg: #333;
 $dark-input-focus-bg: #222;
 $dark-input-border: #666;
@@ -30,6 +28,14 @@ $dark-option-hover-bg: #444;
 $dark-option-active-border: #666;
 $dark-option-selected-bg: #606060;
 $dark-option-border: #606060;
+
+$dark-info-hint-base-color: adjust($primary-color, $hue: -220deg, $saturation: -30%);
+$dark-info-hint-border: color.scale($dark-info-hint-base-color, $lightness: -20%);
+$dark-info-hint-text: color.scale($dark-info-hint-base-color, $lightness: 20%);
+
+$dark-note-base-color: adjust(vars.$primary-color, $hue: -170deg);
+$dark-note-color: desaturate(color.scale($dark-note-base-color, $lightness: 25%), 20%);
+$dark-file-no-autosave-color: color.scale($dark-note-base-color, $lightness: 24%);
 
 
 body.kl-theme-dark {
@@ -60,7 +66,7 @@ body.kl-theme-dark {
     }
 
     .kl-toolspace-row {
-        background: $dark-ui-bg; // Gradient removed
+        background: $dark-ui-bg;
         box-shadow: 0 1px 1px $dark-shadow-color;
     }
 
@@ -89,7 +95,7 @@ body.kl-theme-dark {
     }
 
     .tabrow {
-        background: $dark-tab-bg; // Gradient removed
+        background: $dark-tab-bg;
         border-bottom: 1px solid $dark-activated-bg;
     }
 
@@ -127,7 +133,7 @@ body.kl-theme-dark {
         background: $dark-button-active-bg;
     }
 
-    .kl-popup {
+    .kl-popup, .kl-d-modal-root {
         background: $dark-popup-overlay-bg;
     }
 
@@ -239,7 +245,7 @@ body.kl-theme-dark {
 
     .kl-file-no-autosave {
         background: transparent;
-        color: color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 24%);
+        color: $dark-file-no-autosave-color;
         box-shadow: inset 0 0 0 1px;
     }
 
@@ -339,8 +345,8 @@ body.kl-theme-dark {
     .kl-import-note,
     .kl-toolspace-note {
         background: none;
-        color: desaturate(color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 25%), 20%);
-        border: 1px solid desaturate(color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 25%), 20%);
+        color: $dark-note-color;
+        border: 1px solid $dark-note-color;
     }
 
     .kl-curves-graph__grip {
