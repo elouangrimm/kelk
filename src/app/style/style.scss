@@ -6,9 +6,9 @@
     @import 'vars';
 
     :root {
-        --active-highlight-color: #{vars.$activeHighlightColor};
+        --active-highlight-color: #{$activeHighlightColor};
         --body-bg-color: #f0f0f0;
-        --kl-color: #{vars.$klColor};
+        --kl-color: #{$klColor};
         --ui-bg-color: #dddddd;
     }
 
@@ -156,12 +156,12 @@
     }
     .kl-button-primary:hover {
         background-image: none;
-        background-color: lighten(vars.$klColor, 10%);
+        background-color: lighten($klColor, 10%);
         color: #fff;
     }
     .kl-button-primary:active {
         background-image: none;
-        background-color: lighten(vars.$klColor, 5%);
+        background-color: lighten($klColor, 5%);
         color: #fff;
     }
 
