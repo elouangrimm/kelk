@@ -5,38 +5,38 @@
 
 // --- Color Palette Generation (Light Theme) ---
 $active-highlight-color: color.scale(vars.$primary-color, $lightness: 10%);
-$body-bg-color: color.scale(color.desaturate(vars.$primary-color, 85%), $lightness: 48%);
-$ui-bg-color: color.scale(color.desaturate(vars.$primary-color, 90%), $lightness: 40%);
-$text-color: color.desaturate(color.scale(vars.$primary-color, $lightness: -65%), 80%);
-$text-color-light: color.desaturate(color.scale(vars.$primary-color, $lightness: -55%), 80%);
-$text-color-link-visited: color.desaturate(color.scale(vars.$primary-color, $lightness: -25%), 50%);
-$border-color: color.desaturate(color.scale(vars.$primary-color, $lightness: -5%), 80%);
-$border-color-light: color.desaturate(color.scale(vars.$primary-color, $lightness: 25%), 80%);
-$shadow-color: rgba(color.desaturate(color.scale(vars.$primary-color, $lightness: -95%), 90%), 0.2);
-$shadow-color-light: rgba(color.desaturate(color.scale(vars.$primary-color, $lightness: -95%), 90%), 0.05);
-$button-bg: color.scale(color.desaturate(vars.$primary-color, 95%), $lightness: 50%);
+$body-bg-color: color.scale(color.adjust(vars.$primary-color, $saturation: -85%), $lightness: 48%);
+$ui-bg-color: color.scale(color.adjust(vars.$primary-color, $saturation: -90%), $lightness: 40%);
+$text-color: color.adjust(color.scale(vars.$primary-color, $lightness: -65%), $saturation: -80%);
+$text-color-light: color.adjust(color.scale(vars.$primary-color, $lightness: -55%), $saturation: -80%);
+$text-color-link-visited: color.adjust(color.scale(vars.$primary-color, $lightness: -25%), $saturation: -50%);
+$border-color: color.adjust(color.scale(vars.$primary-color, $lightness: -5%), $saturation: -80%);
+$border-color-light: color.adjust(color.scale(vars.$primary-color, $lightness: 25%), $saturation: -80%);
+$shadow-color: rgba(color.adjust(color.scale(vars.$primary-color, $lightness: -95%), $saturation: -90%), 0.2);
+$shadow-color-light: rgba(color.adjust(color.scale(vars.$primary-color, $lightness: -95%), $saturation: -90%), 0.05);
+$button-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -95%), $lightness: 50%);
 $button-hover-bg: #fff;
 $button-active-bg: $ui-bg-color;
 $button-disabled-bg: $ui-bg-color;
-$button-disabled-text: color.desaturate(color.scale(vars.$primary-color, $lightness: 10%), 80%);
+$button-disabled-text: color.adjust(color.scale(vars.$primary-color, $lightness: 10%), $saturation: -80%);
 $activated-bg: #fff;
-$tab-bg: color.scale(color.desaturate(vars.$primary-color, 80%), $lightness: 68%);
-$tab-active-bg: color.scale(color.desaturate(vars.$primary-color, 80%), $lightness: 85%);
-$popup-bg: color.scale(color.desaturate(vars.$primary-color, 80%), $lightness: 42%);
-$popup-overlay-bg: rgba(color.desaturate(color.scale(vars.$primary-color, $lightness: -70%), 50%), 0.5);
+$tab-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -80%), $lightness: 68%);
+$tab-active-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -80%), $lightness: 85%);
+$popup-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -80%), $lightness: 42%);
+$popup-overlay-bg: rgba(color.adjust(color.scale(vars.$primary-color, $lightness: -70%), $saturation: -50%), 0.5);
 $input-bg: #fff;
-$input-border: color.desaturate(color.scale(vars.$primary-color, $lightness: 20%), 80%);
-$input-focus-border: color.desaturate(color.scale(vars.$primary-color, $lightness: -20%), 80%);
+$input-border: color.adjust(color.scale(vars.$primary-color, $lightness: 20%), $saturation: -80%);
+$input-focus-border: color.adjust(color.scale(vars.$primary-color, $lightness: -20%), $saturation: -80%);
 $option-color: rgba($text-color, 0.6);
 $option-border: rgba($text-color, 0.3);
-$option-hover-bg: color.scale(color.desaturate(vars.$primary-color, 90%), $lightness: 45%);
+$option-hover-bg: color.scale(color.adjust(vars.$primary-color, $saturation: -90%), $lightness: 45%);
 
 $info-hint-base-color: color.adjust(vars.$primary-color, $hue: -220deg);
 $info-hint-bg: color.scale($info-hint-base-color, $lightness: 30%);
 $info-hint-border: color.scale($info-hint-base-color, $lightness: -10%);
 
 $note-base-color: color.adjust(vars.$primary-color, $hue: -170deg);
-$note-color: color.desaturate(color.scale($note-base-color, $lightness: -20%), 20%);
+$note-color: color.adjust(color.scale($note-base-color, $lightness: -20%), $saturation: -20%);
 $note-bg: rgba($note-base-color, 0.5);
 $note-border: color.scale($note-base-color, $lightness: -10%);
 $file-no-autosave-bg: color.scale($note-base-color, $lightness: 40%);
@@ -61,7 +61,6 @@ body,
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     touch-action: none;
-
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
@@ -307,7 +306,7 @@ input:focus {
 
 .kl-textarea::placeholder,
 .kl-input::placeholder {
-    color: color.desaturate(color.scale($text-color, $lightness: 40%), 50%);
+    color: color.adjust(color.scale($text-color, $lightness: 40%), $saturation: -50%);
 }
 
 .tabrow {
