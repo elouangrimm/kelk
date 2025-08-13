@@ -1,0 +1,75 @@
+@use 'vars' as v;
+@use 'sass:color';
+
+// --- Theme Generation ---
+
+// Light Theme Palette
+$light-theme: (
+  'primary': v.$primary-color,
+  'on-primary': #FFFFFF,
+  'primary-container': color.scale(v.$primary-color, $lightness: 80%),
+  'on-primary-container': color.scale(v.$primary-color, $lightness: -60%),
+  'secondary': color.adjust(v.$primary-color, $hue: 60deg),
+  'on-secondary': #FFFFFF,
+  'secondary-container': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: 80%),
+  'on-secondary-container': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: -60%),
+  'tertiary': color.adjust(v.$primary-color, $hue: -60deg),
+  'on-tertiary': #FFFFFF,
+  'tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: 80%),
+  'on-tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: -60%),
+  'error': #B3261E,
+  'on-error': #FFFFFF,
+  'error-container': #F9DEDC,
+  'on-error-container': #410E0B,
+  'background': #FEF7FF,
+  'on-background': #1D1B20,
+  'surface': #FEF7FF,
+  'on-surface': #1D1B20,
+  'surface-variant': #E7E0EC,
+  'on-surface-variant': #49454F,
+  'outline': #79747E,
+  'shadow': #000000,
+  'inverse-surface': #322F35,
+  'inverse-on-surface': #F5EFF7,
+  'inverse-primary': color.scale(v.$primary-color, $lightness: 40%),
+);
+
+// Dark Theme Palette
+$dark-theme: (
+  'primary': color.scale(v.$primary-color, $lightness: 40%),
+  'on-primary': color.scale(v.$primary-color, $lightness: -20%),
+  'primary-container': color.scale(v.$primary-color, $lightness: -30%),
+  'on-primary-container': color.scale(v.$primary-color, $lightness: 70%),
+  'secondary': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: 40%),
+  'on-secondary': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: -20%),
+  'secondary-container': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: -30%),
+  'on-secondary-container': color.scale(color.adjust(v.$primary-color, $hue: 60deg), $lightness: 70%),
+  'tertiary': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: 40%),
+  'on-tertiary': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: -20%),
+  'tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: -30%),
+  'on-tertiary-container': color.scale(color.adjust(v.$primary-color, $hue: -60deg), $lightness: 70%),
+  'error': #F2B8B5,
+  'on-error': #601410,
+  'error-container': #8C1D18,
+  'on-error-container': #F2B8B5,
+  'background': #141218,
+  'on-background': #E6E0E9,
+  'surface': #141218,
+  'on-surface': #E6E0E9,
+  'surface-variant': #49454F,
+  'on-surface-variant': #CAC4D0,
+  'outline': #938F99,
+  'shadow': #000000,
+  'inverse-surface': #E6E0E9,
+  'inverse-on-surface': #322F35,
+  'inverse-primary': v.$primary-color,
+);
+
+
+// Mixin to apply a theme
+@mixin apply-theme($theme-map) {
+  color-scheme: if(map-get($theme-map, 'background') == #141218, 'dark', 'light');
+  @each $key, $value in $theme-map {
+    --color-#{$key}: #{$value};
+  }
+}
