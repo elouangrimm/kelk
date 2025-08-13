@@ -1,5 +1,8 @@
+// Define a Sass variable for the primary color to use with Sass functions
+$primary-color-value: #2a64f8;
+
 :root {
-    --primary-color: #2a64f8;
+    --primary-color: #{$primary-color-value}; // Use the Sass variable to set the CSS variable
     --bg-color: #212121;
     --ui-bg-color: #2c2c2c;
     --ui-hover-color: #383838;
@@ -57,7 +60,7 @@ body.kl-theme-dark {
     }
 
     .toolspace-row-button__submit:hover {
-        background: lighten(var(--primary-color), 10%);
+        background: lighten($primary-color-value, 10%);
     }
 
     .tabrow {
@@ -157,7 +160,8 @@ body.kl-theme-dark {
 
         &:hover {
             background-image: none;
-            background-color: lighten(var(--primary-color), 10%);
+            // Corrected Line: Use the Sass variable with the lighten function
+            background-color: lighten($primary-color-value, 10%);
         }
     }
 
