@@ -19,7 +19,7 @@ $dark-button-disabled-text: #999;
 $dark-activated-bg: #6e6e6e;
 $dark-tab-bg: #2c2c2c;
 $dark-tab-active-bg: #6e6e6e;
-$dark-popup-overlay-bg: rgba(desaturate(color.scale($primary-color, $lightness: -85%), 90%), 0.63);
+$dark-popup-overlay-bg: rgba(color.desaturate(color.scale($primary-color, $lightness: -85%), 90%), 0.63);
 $dark-input-bg: #333;
 $dark-input-focus-bg: #222;
 $dark-input-border: #666;
@@ -29,12 +29,12 @@ $dark-option-active-border: #666;
 $dark-option-selected-bg: #606060;
 $dark-option-border: #606060;
 
-$dark-info-hint-base-color: adjust($primary-color, $hue: -220deg, $saturation: -30%);
+$dark-info-hint-base-color: color.adjust($primary-color, $hue: -220deg, $saturation: -30%);
 $dark-info-hint-border: color.scale($dark-info-hint-base-color, $lightness: -20%);
 $dark-info-hint-text: color.scale($dark-info-hint-base-color, $lightness: 20%);
 
-$dark-note-base-color: adjust(vars.$primary-color, $hue: -170deg);
-$dark-note-color: desaturate(color.scale($dark-note-base-color, $lightness: 25%), 20%);
+$dark-note-base-color: color.adjust(vars.$primary-color, $hue: -170deg);
+$dark-note-color: color.desaturate(color.scale($dark-note-base-color, $lightness: 25%), 20%);
 $dark-file-no-autosave-color: color.scale($dark-note-base-color, $lightness: 24%);
 
 
