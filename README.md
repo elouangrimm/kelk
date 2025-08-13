@@ -1,12 +1,10 @@
-🖌️ [Demo](https://kleki.com/) | ❓ [About](https://kleki.com/about/) | 📝 [Dev Blog](https://blog.kleki.com/)
+🖌️ [Demo](https://kleki.com/) | ❓ [About](https://kleki.com/about/)
 
 <p style="text-align:center">
 <img src="https://bitbof.com/stuff/2022-01-klecks/2022-03-klecks-github.png" alt="kelk"><br>
 </p>
 
-kelk (German for "splash of color", pronounced "clex") is the official open-source release of the community-funded online painting app [Kleki](https://kleki.com).
-
-kelk can run in standalone mode (e.g. on [kleki.com](https://kleki.com)).
+An open-source, community funded, painting tool for the browser forked from <a href="https://klecks.org" target="_blank" rel="noopener noreferrer">Klecks</a>.
 
 ## Features
 - Layers
@@ -18,10 +16,6 @@ kelk can run in standalone mode (e.g. on [kleki.com](https://kleki.com)).
 - Lineart extraction
 - Editing tools: transform, crop/expand, resize, perspective
 - Supports all major form factors: desktop, tablet and phone
-
----
-
-Created by developer/artist [bitbof](https://bitbof.com)
 
 ---
 
@@ -39,13 +33,3 @@ To run kelk (standalone) within a Docker container, run the following commands i
 `docker-compose up -d`
 
 It is then accessible through: http://localhost:5050
-
-
-# Contribute
-kelk is community funded. [Donate today](https://kleki.com/donate/)
-
-# License
-
-bitbof © 2025 - Released under the MIT License. Icons by bitbof are public domain (excluding the kelk logo, bitbof logo).
-
-If you wish to say you're using "kelk" and use its branding you must acquire a license from bitbof. You are free to say you're using "kelk".
