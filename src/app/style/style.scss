@@ -1,4 +1,3 @@
-/* --- entrypoint for app ---*/
 @use 'vars';
 @use './dark';
 
@@ -64,6 +63,8 @@ html {
     /* some browsers like to overwrite body */
     font-size: 16px;
     font-family: system-ui, sans-serif;
+    color: vars.$light-on-background;
+    background-color: vars.$light-background;
 }
 
 a:link,
@@ -73,22 +74,22 @@ a:not([href]) {
     cursor: pointer;
 }
 a:visited {
-    color: #536184;
+    color: color.scale(vars.$light-primary, $lightness: -20%);
     text-decoration: underline;
 }
 
 a:hover,
 a:not([href]):hover {
-    color: #000;
+    color: vars.$light-on-background;
     text-decoration: underline;
 }
 
 .kl-select {
-    background: #fff;
+    background: vars.$light-surface;
 }
 
 .grid-hr {
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    border-top: 1px solid vars.$light-outline-variant;
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
@@ -100,18 +101,16 @@ a:not([href]):hover {
 }
 
 .kl-toolspace--left {
-    border-right: 1px solid rgb(135, 135, 135);
+    border-right: 1px solid vars.$light-outline;
 }
 
 .kl-toolspace--right {
-    border-left: 1px solid rgb(135, 135, 135);
+    border-left: 1px solid vars.$light-outline;
 }
 
 .kl-toolspace-row {
-    background: linear-gradient(to top, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.6) 100%);
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.1),
-        0 1px #cecece;
+    background-color: transparent;
+    box-shadow: 0 1px 3px rgba(vars.$light-on-surface, 0.1), 0 1px vars.$light-outline-variant;
 }
 
 .nohighlight {
@@ -138,26 +137,26 @@ a:not([href]):hover {
 }
 
 .toolspace-row-button-hover {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(vars.$light-primary, 0.1);
 }
 
 .toolspace-row-button:active,
 .toolspace-triangle-button:active {
-    background-color: #ddd;
-    box-shadow: inset 2px 2px 10px rgba(0, 0, 0, 0.2) !important;
+    background-color: rgba(vars.$light-primary, 0.2);
+    box-shadow: inset 2px 2px 10px rgba(vars.$light-on-surface, 0.1) !important;
 }
 
 .toolspace-svg-triangle-button-hover {
-    fill: rgba(255, 255, 255, 0.7);
+    fill: rgba(vars.$light-primary, 0.1);
 }
 
 .toolspace-svg-triangle-button:active {
-    fill: #ddd;
+    fill: rgba(vars.$light-primary, 0.2);
     filter: url(#innershadow);
 }
 
 .toolspace-row-button-activated {
-    background: #fff;
+    background: vars.$light-primary-container;
     box-shadow: inset 0 2px 0 0 var(--active-highlight-color);
     pointer-events: none;
 }
@@ -185,7 +184,7 @@ a:not([href]):hover {
 }
 
 .kl-tool-row-border-right {
-    border-right: 1px solid rgb(212, 212, 212);
+    border-right: 1px solid vars.$light-outline-variant;
 }
 
 .kl-color-picker {
@@ -194,21 +193,21 @@ a:not([href]):hover {
 .kl-color-picker__h,
 .kl-color-picker__sv,
 .kl-color-picker__preview {
-    box-shadow: 0 0 0 1px rgb(188, 188, 188);
+    box-shadow: 0 0 0 1px vars.$light-outline;
 }
 
 .kl-color-picker--active {
-    box-shadow: 0 0 0 1px #fff;
+    box-shadow: 0 0 0 1px vars.$light-primary;
     z-index: 1;
 }
 
 .kl-color-picker__secondary {
-    box-shadow: 0 0 0 1px rgb(188, 188, 188);
+    box-shadow: 0 0 0 1px vars.$light-outline;
 }
 
 .color-picker-preview-button {
     cursor: pointer;
-    color: #000;
+    color: vars.$light-on-surface;
     opacity: 0.8;
     text-align: center;
     user-select: none;
@@ -216,13 +215,13 @@ a:not([href]):hover {
 }
 
 .color-picker-preview-button-hover {
-    background-color: #fff;
+    background-color: rgba(vars.$light-primary, 0.1);
     opacity: 1;
     filter: none !important;
 }
 
 .color-picker-preview-button-active {
-    background-color: #fff;
+    background-color: vars.$light-primary-container;
     opacity: 1;
     box-shadow: inset 0 2px 0 0 var(--active-highlight-color);
     filter: none !important;
@@ -230,48 +229,47 @@ a:not([href]):hover {
 
 .slider-wrapper {
     border-radius: 8px;
-    box-shadow: 0.5px 1px 0 0 rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    background: linear-gradient(to bottom, #909090 1%, #b3b3b3 73%);
-    color: #333;
+    box-shadow: 0.5px 1px 0 0 rgba(vars.$light-on-surface, 0.1);
+    text-shadow: 0 0 5px rgba(vars.$light-on-surface, 0.1);
+    background: vars.$light-surface-variant;
+    color: vars.$light-on-surface-variant;
     cursor: ew-resize;
 }
 
 .slider-wrapper--active {
-    background: linear-gradient(to bottom, #7a7a7a 1%, #939393 73%);
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
-    color: #000;
+    background: color.scale(vars.$light-surface-variant, $lightness: -5%);
+    box-shadow: 0 0 1px 1px rgba(vars.$light-on-surface, 0.2);
+    color: vars.$light-on-surface;
 }
 
 .slider-wrapper--active .slider-inner {
-    box-shadow: 2px 2px 10px rgb(145, 145, 145);
-    background: #fff;
+    box-shadow: 2px 2px 10px rgba(vars.$light-on-surface, 0.2);
+    background: vars.$light-surface;
 }
 
 .slider-inner {
-    background-color: #fff;
-    background-image: linear-gradient(to top, rgb(232, 232, 232) 0%, rgba(255, 255, 255, 1) 70%);
+    background-color: vars.$light-surface;
     box-shadow:
-        inset 1px 1px 1px rgba(0, 0, 0, 0.3),
-        2px 2px 6px rgba(145, 145, 145, 0.49);
+        inset 1px 1px 1px rgba(vars.$light-on-surface, 0.2),
+        2px 2px 6px rgba(vars.$light-on-surface, 0.1);
     border-radius: 6px 0 0 0;
 }
 
 .kl-point-slider__line {
     height: 2px;
-    background: #aaa;
+    background: vars.$light-outline;
 }
 
 .kl-point-slider__point {
     position: absolute;
     top: 0;
-    background-color: #eaeaea;
+    background-color: vars.$light-surface;
     cursor: ew-resize;
     transition: box-shadow 0.2s ease-in-out;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 3px rgba(vars.$light-on-surface, 0.8);
 
     &:active {
-        box-shadow: 0 0 6px rgba(0, 0, 0, 1);
+        box-shadow: 0 0 6px rgba(vars.$light-on-surface, 1);
     }
 }
 
@@ -280,55 +278,42 @@ button {
     min-width: 30px;
     font-size: 15px;
     line-height: 17px; // height of icons
-    color: #666;
+    color: vars.$light-on-surface-variant;
     border: none;
-    background-color: #f3f3f3;
+    background-color: vars.$light-surface-variant;
     border-radius: 4px;
-
-    background-image: linear-gradient(
-        to top,
-        rgba(111, 111, 111, 0.1) 0%,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0.3) 100%
-    );
-
     box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.04),
-        0 1px rgba(0, 0, 0, 0.1),
-        0 2px 3px rgba(0, 0, 0, 0.05);
+        0 0 0 1px rgba(vars.$light-on-surface, 0.04),
+        0 1px rgba(vars.$light-on-surface, 0.1),
+        0 2px 3px rgba(vars.$light-on-surface, 0.05);
     user-select: none;
     -webkit-user-select: none;
 }
 
 button:hover {
-    background-color: #fff;
-    color: #777;
+    background-color: color.scale(vars.$light-surface-variant, $lightness: 5%);
+    color: vars.$light-on-surface;
     cursor: pointer;
 }
 
 button:active {
-    background-color: #ddd;
+    background-color: color.scale(vars.$light-surface-variant, $lightness: -5%);
     box-shadow:
-        inset 2px 2px 10px rgba(0, 0, 0, 0.2),
-        0 2px 2px #ddd;
+        inset 2px 2px 10px rgba(vars.$light-on-surface, 0.2),
+        0 2px 2px color.scale(vars.$light-surface-variant, $lightness: -5%);
 }
 
 button:disabled {
     padding: 5px;
     min-width: 30px;
     font-size: 15px;
-    color: #999;
+    color: rgba(vars.$light-on-surface, 0.5);
     border: none;
-    background-color: #ddd;
+    background-color: vars.$light-surface-variant;
     border-radius: 4px;
-
-    background-image: linear-gradient(
-        to top,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0.3) 100%
-    );
     cursor: default;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 1px rgba(vars.$light-on-surface, 0.05);
+    opacity: 0.7;
 }
 
 button:disabled img {
@@ -341,24 +326,16 @@ button img {
 }
 
 .kl-button-primary {
-    background: var(--kl-color);
-    color: #fff;
+    background: vars.$light-primary;
+    color: vars.$light-on-primary;
 }
 .kl-button-primary:hover {
-    background-image: linear-gradient(
-        to top,
-        var(--kl-color) -50%,
-        var(--active-highlight-color) 150%
-    );
-    color: #fff;
+    background: color.scale(vars.$light-primary, $lightness: 10%);
+    color: vars.$light-on-primary;
 }
 .kl-button-primary:active {
-    background-image: linear-gradient(
-        to top,
-        var(--kl-color) -50%,
-        var(--active-highlight-color) 120%
-    );
-    color: #fff;
+    background: color.scale(vars.$light-primary, $lightness: -5%);
+    color: vars.$light-on-primary;
     box-shadow: unset;
 }
 
@@ -380,7 +357,7 @@ button img {
     height: 100%;
     overflow: hidden;
     overflow-y: auto;
-    background: rgba(50, 50, 50, 0.5);
+    background: rgba(vars.$light-on-surface, 0.4);
     animation-name: consoleIn;
     animation-duration: 0.3s;
     animation-timing-function: ease-out;
@@ -389,11 +366,11 @@ button img {
 
 .kl-popup-box {
     position: relative;
-    background-color: #ddd;
+    background-color: vars.$light-surface;
     border-radius: 10px;
     padding: 20px;
     margin: 10px 0;
-    box-shadow: rgba(0, 0, 0, 0.45) 0 5px 60px;
+    box-shadow: rgba(vars.$light-on-surface, 0.45) 0 5px 60px;
 }
 
 .kl-popup-box--sm {
@@ -445,12 +422,12 @@ button img {
 }
 
 .kl-d-modal-root {
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(vars.$light-on-surface, 0.4);
 }
 
 .kl-d-modal {
-    background: #eee;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 60px;
+    background: vars.$light-surface;
+    box-shadow: rgba(vars.$light-on-surface, 0.25) 0px 5px 60px;
 }
 
 @keyframes topOverlayPulse {
@@ -486,12 +463,10 @@ button img {
 .top-overlay--inner {
     text-align: center;
     padding: 7px 10px;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: #fff;
+    background-color: rgba(vars.$light-on-surface, 0.8);
+    color: vars.$light-surface;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    /*box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.3);*/
-    /*text-shadow: 0.5px 0.5px rgba(0,0,0,0.5);*/
 }
 
 .kl-checkbox {
@@ -500,92 +475,87 @@ button img {
     -webkit-user-select: none; // safari
 }
 .kl-checkbox--highlight {
-    background: #bed5ff;
+    background: vars.$light-primary-container;
 }
 
 .kl-checkbox__inner {
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(vars.$light-on-surface, 0.6);
 }
 
 .kl-checkbox__inner:hover {
-    color: rgba(0, 0, 0, 1);
+    color: rgba(vars.$light-on-surface, 1);
 }
 
 .kl-layer {
     width: 270px;
     height: 36px;
-    // padding-left: 25px;
-    background-color: rgb(220, 220, 220);
-    border: 1px solid rgb(158, 158, 158);
+    background-color: vars.$light-surface-variant;
+    border: 1px solid vars.$light-outline;
     position: absolute;
     left: 0;
     transition: all 0.1s linear;
-    // border-radius: 5px;
     box-sizing: border-box;
-    background-image: linear-gradient(
-        to top,
-        rgba(188, 188, 188, 0.1) 0%,
-        rgba(255, 255, 255, 0.3) 100%
-    );
 
     .kl-layer__label,
     .kl-layer__opacity-label {
-        color: #666;
+        color: vars.$light-on-surface-variant;
     }
 }
 
 .kl-layer--selected {
-    background: #fff;
+    background: vars.$light-primary-container;
     border: 1px solid var(--active-highlight-color);
     z-index: 1;
 
     .kl-layer__label {
-        color: #000;
+        color: vars.$light-on-primary-container;
     }
 }
 
 .info-hint {
-    background: rgb(255, 132, 115);
+    background: vars.$light-error-container;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #d00000;
+    border: 1px solid vars.$light-error;
+    color: vars.$light-on-error-container;
     margin-bottom: 10px;
 }
 
 textarea,
 input {
-    border: 1px solid #b2b2b2;
+    border: 1px solid vars.$light-outline;
     box-sizing: border-box;
-    background: #fff;
+    background: vars.$light-surface;
     padding: 5px;
     font-size: 0.95em;
+    color: vars.$light-on-surface;
 }
 
 textarea:focus,
 input:focus {
-    border: 1px solid #636363;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #fff;
+    border: 1px solid vars.$light-primary;
+    box-shadow: 0 0 10px rgba(vars.$light-primary, 0.1);
+    background: vars.$light-surface;
 }
 
 .kl-textarea::placeholder,
 .kl-input::placeholder {
-    color: #929292;
+    color: rgba(vars.$light-on-surface, 0.5);
 }
 
 .popup-x {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #888;
+    color: vars.$light-on-surface-variant;
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none; // safari
     filter: brightness(0.9);
 }
 .popup-x:hover {
-    color: #000;
+    color: vars.$light-on-surface;
     filter: brightness(0.5);
 }
 
@@ -595,7 +565,7 @@ input:focus {
     height: 35px;
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid #aaa;
+    border: 1px solid vars.$light-outline;
     margin-right: 1px;
     display: inline-block;
     background-size: contain;
@@ -610,8 +580,8 @@ input:focus {
 .brush-alpha--selected {
     opacity: 1;
     cursor: default;
-    background-color: #fff;
-    border: 1px solid #76a6ff;
+    background-color: vars.$light-surface;
+    border: 1px solid vars.$light-primary;
 }
 
 iframe {
@@ -620,8 +590,8 @@ iframe {
 }
 
 .tabrow {
-    background: linear-gradient(to top, rgb(208, 208, 208) 0%, rgba(208, 208, 208, 0) 80%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    background-color: vars.$light-surface-variant;
+    border-bottom: 1px solid vars.$light-outline-variant;
     display: flex;
     position: relative;
     z-index: 0;
@@ -644,16 +614,16 @@ iframe {
     z-index: 0;
 }
 .tabrow__tab-hover {
-    background-color: #fff;
+    background-color: rgba(vars.$light-on-surface, 0.05);
 }
 
 .tabrow__tab:active:not(.tabrow__tab--opened-accented, .tabrow__tab--opened) {
-    box-shadow: inset 0 1px #0000004d;
+    box-shadow: inset 0 1px rgba(vars.$light-on-surface, 0.3);
 }
 
 .tabrow__tab--opened,
 .tabrow__tab--opened-accented {
-    background-color: #f5f5f5;
+    background-color: vars.$light-background;
     opacity: 1;
     cursor: default;
     position: relative;
@@ -672,15 +642,6 @@ iframe {
     }
 }
 
-/*
-multiple inverted radius attempts:
-- svg background -> extra image to load (or data-url), a bit bulky
-- transparent box with rounded corner throwing a box-shadow -> overlapped the icons
-    & visual artifacts if clipped
-- radial gradient -> pixelated and not really round looking
-
-clip-path seems the cleanest.
- */
 .tabrow__tab__rounding-left {
     pointer-events: none;
     position: absolute;
@@ -688,9 +649,7 @@ clip-path seems the cleanest.
     bottom: 0;
     width: 11px;
     height: 10px;
-    background: #f5f5f5;
-    // webstorm complains for no reason https://youtrack.jetbrains.com/issue/WEB-56824/Mismatched-property-value-error-for-clip-path-path...
-    // noinspection CssInvalidPropertyValue
+    background: vars.$light-background;
     clip-path: path("M 11 10 11 0 10 0 A 10 10 0 0 1 0 10");
     filter: none !important;
 
@@ -707,8 +666,7 @@ clip-path seems the cleanest.
     bottom: 0;
     width: 11px;
     height: 10px;
-    background: #f5f5f5;
-    // noinspection CssInvalidPropertyValue
+    background: vars.$light-background;
     clip-path: path("M 0 0 0 10 11 10 A 10 10 0 0 1 1 0");
     filter: none !important;
 
@@ -729,21 +687,20 @@ clip-path seems the cleanest.
     padding: 6px 10px;
     font-size: 16px;
     border-radius: 4px;
-    // transition: all 0.1s ease-in-out;
 
     background: var(--ui-bg-color);
-    color: rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+    color: rgba(vars.$light-on-surface, 0.7);
+    box-shadow: inset 0 0 0 1px vars.$light-outline;
 
     user-select: none;
     -webkit-user-select: none; // safari
 
     &:not(.kl-option-selected) {
         &:hover {
-            background: #eee;
+            background: color.scale(vars.$light-surface, $lightness: -5%);
         }
         &:active {
-            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 0 0 2px vars.$light-outline;
         }
     }
 }
@@ -761,8 +718,8 @@ clip-path seems the cleanest.
 }
 
 .kl-option-selected {
-    background: #fff;
-    color: #000;
+    background: vars.$light-primary-container;
+    color: vars.$light-on-primary-container;
     box-shadow: inset 0 0 0 2px var(--active-highlight-color);
     cursor: default;
 }
@@ -772,27 +729,26 @@ clip-path seems the cleanest.
     padding: 6px 10px;
     font-size: 16px;
     border-radius: 4px;
-    //transition: all 0.1s ease-in-out;
 
-    color: rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+    color: rgba(vars.$light-on-surface, 0.7);
+    box-shadow: inset 0 0 0 1px vars.$light-outline;
 
     user-select: none;
     -webkit-user-select: none; // safari
 
     &:not(.kl-box-toggle--active) {
         &:hover {
-            background: #eee;
+            background: color.scale(vars.$light-surface, $lightness: -5%);
         }
         &:active {
-            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 0 0 2px vars.$light-outline;
         }
     }
 }
 
 .kl-box-toggle--active {
-    background: #fff;
-    color: #000;
+    background: vars.$light-primary-container;
+    color: vars.$light-on-primary-container;
     box-shadow: inset 0 0 0 2px var(--active-highlight-color);
     cursor: default;
 }
@@ -806,15 +762,15 @@ clip-path seems the cleanest.
 }
 
 .kl-color-option {
-    box-shadow: 0 0 0 1px #aaa;
+    box-shadow: 0 0 0 1px vars.$light-outline;
     cursor: pointer;
     user-select: none;
     text-align: center;
-    color: #aaa;
+    color: vars.$light-outline;
     border-radius: 4px;
 
     &:not(.kl-color-option--active):active {
-        box-shadow: 0 0 0 2px #aaa;
+        box-shadow: 0 0 0 2px vars.$light-outline;
     }
 }
 
@@ -825,22 +781,21 @@ clip-path seems the cleanest.
 }
 
 .tool-dropdown-wrapper {
-    background: rgb(241, 241, 241);
+    background: vars.$light-surface;
     animation-name: dropdownOpen;
     animation-duration: 0.1s;
     animation-timing-function: ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 5px rgba(vars.$light-on-surface, 0.3);
     z-index: -1;
 }
 
 .tool-dropdown-button:hover {
-    background: #fff;
+    background: color.scale(vars.$light-surface, $lightness: -5%);
 }
 
 .tool-dropdown-button:active {
-    background-color: #ddd;
-    /*box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 2px 2px 10px rgba(0, 0, 0, 0.2);*/
-    box-shadow: inset 2px 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: color.scale(vars.$light-surface, $lightness: -10%);
+    box-shadow: inset 2px 2px 10px rgba(vars.$light-on-surface, 0.2);
 }
 
 @keyframes dropdownOpen {
@@ -860,20 +815,20 @@ clip-path seems the cleanest.
 
     &:not(.image-toggle-active) {
         &:hover {
-            background: #fff;
+            background: vars.$light-surface;
         }
         &:active {
-            box-shadow: #838383 0 0 0 2px;
+            box-shadow: vars.$light-outline 0 0 0 2px;
         }
     }
 }
 .image-toggle:not(.image-toggle-active) {
-    box-shadow: #838383 0 0 0 1px;
+    box-shadow: vars.$light-outline 0 0 0 1px;
     opacity: 0.6;
 }
 .image-toggle-active {
     box-shadow: var(--active-highlight-color) 0 0 0 2px;
-    background-color: #fff;
+    background-color: vars.$light-surface;
 }
 .image-toggle__im {
     width: 100%;
@@ -904,7 +859,7 @@ clip-path seems the cleanest.
 .kl-scroller {
     position: fixed;
     cursor: pointer;
-    background-color: rgba(155, 155, 155, 0.9);
+    background-color: rgba(vars.$light-on-surface, 0.6);
     filter: invert(1);
     width: 36px;
     height: 36px;
@@ -916,7 +871,7 @@ clip-path seems the cleanest.
 }
 
 .kl-scroller:active {
-    background-color: rgba(180, 180, 180, 0.9);
+    background-color: rgba(vars.$light-on-surface, 0.8);
 }
 
 .kl-table {
@@ -938,12 +893,12 @@ clip-path seems the cleanest.
         transition: background 0.1s ease-in-out;
 
         cursor: pointer;
-        border: 1px solid rgba(0, 0, 0, 0.6);
-        color: rgba(0, 0, 0, 0.6);
+        border: 1px solid vars.$light-outline;
+        color: vars.$light-on-surface-variant;
         border-bottom: none;
 
         &:hover {
-            background: #eee;
+            background: vars.$light-surface-variant;
         }
     }
 
@@ -958,27 +913,27 @@ clip-path seems the cleanest.
     }
 
     .kl-2-tabs--active {
-        color: #000;
-        background: #fff;
+        color: vars.$light-on-primary-container;
+        background: vars.$light-primary-container;
         border: 1px solid var(--active-highlight-color);
         border-bottom: none;
         pointer-events: none;
         &:hover {
-            background: #fff;
+            background: vars.$light-primary-container;
         }
     }
 }
 
 .kl-layer-preview {
-    color: #555;
+    color: vars.$light-on-surface-variant;
     canvas {
-        box-shadow: 0 0 0 1px #9e9e9e;
+        box-shadow: 0 0 0 1px vars.$light-outline;
     }
 }
 
 .kl-edit-crop-preview {
-    border-top: 1px solid #bbb;
-    border-bottom: 1px solid #bbb;
+    border-top: 1px solid vars.$light-outline-variant;
+    border-bottom: 1px solid vars.$light-outline-variant;
 }
 
 .kl-edit-crop-preview__sel {
@@ -991,25 +946,25 @@ clip-path seems the cleanest.
 }
 
 .kl-text-error {
-    color: #f00;
+    color: vars.$light-error;
 }
 
 .kl-file-no-autosave {
     text-align: center;
     margin-top: 10px;
-    background: rgb(243, 243, 161);
+    background: vars.$light-error-container;
     padding: 5px 5px;
-    color: rgba(0, 0, 0, 0.65);
+    color: vars.$light-on-error-container;
     font-size: 15px;
 }
 
 .kl-preview-wrapper {
     margin-left: -20px;
-    background-color: #9e9e9e;
+    background-color: vars.$light-outline-variant;
     margin-top: 10px;
     box-shadow:
-        rgba(0, 0, 0, 0.2) 0px 1px inset,
-        rgba(0, 0, 0, 0.2) 0px -1px inset;
+        rgba(vars.$light-on-surface, 0.2) 0px 1px inset,
+        rgba(vars.$light-on-surface, 0.2) 0px -1px inset;
     overflow: hidden;
     position: relative;
     user-select: none;
@@ -1020,17 +975,17 @@ clip-path seems the cleanest.
 
 .kl-preview-wrapper__canvas {
     position: relative;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(vars.$light-on-surface, 0.5);
 }
 
 .kl-transparent-preview {
     box-shadow:
-        rgba(0, 0, 0, 0.2) 0px 1px inset,
-        rgba(0, 0, 0, 0.2) 0px -1px inset;
+        rgba(vars.$light-on-surface, 0.2) 0px 1px inset,
+        rgba(vars.$light-on-surface, 0.2) 0px -1px inset;
 }
 
 .kl-transparent-preview__canvas {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(vars.$light-on-surface, 0.5);
 }
 
 .kl-text-preview-wrapper {
@@ -1046,47 +1001,48 @@ clip-path seems the cleanest.
     display: block;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px rgba(vars.$light-on-surface, 0.5);
 }
 
 .kl-stabilizer {
     display: flex;
     align-items: center;
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(vars.$light-on-surface, 0.6);
     margin-right: -1px;
 }
 
 .kl-toolspace-note {
-    color: #534a3c;
-    background: rgba(255, 255, 0, 0.5);
-    border: 1px solid #e7d321;
+    color: vars.$light-on-error-container;
+    background: vars.$light-error-container;
+    border: 1px solid vars.$light-error;
     border-radius: 5px;
     padding: 8px;
     text-align: center;
 }
 
 .kl-import-note {
-    background: rgba(255, 255, 0, 0.5);
+    background: vars.$light-error-container;
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 5px;
-    border: 1px solid #e7d321;
+    border: 1px solid vars.$light-error;
+    color: vars.$light-on-error-container;
     border-radius: 5px;
 }
 
 .kl-curves-graph {
     canvas {
-        background: #c6c6c6;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+        background: vars.$light-surface-variant;
+        box-shadow: 0 0 0 1px rgba(vars.$light-on-surface, 0.3);
     }
 }
 
 .kl-curves-graph__grip {
     position: absolute;
-    background: #fff;
+    background: vars.$light-surface;
     cursor: move;
-    box-shadow: inset 0 0 0 2px #000;
+    box-shadow: inset 0 0 0 2px vars.$light-on-surface;
     user-select: none;
     touch-action: none;
 }
@@ -1098,9 +1054,9 @@ clip-path seems the cleanest.
     justify-content: center;
     margin-top: 10px;
     position: relative;
-    box-shadow: inset 0 0 0 1px #aaa;
-    background: #cdcdcd;
-    color: #545454;
+    box-shadow: inset 0 0 0 1px vars.$light-outline;
+    background: vars.$light-surface-variant;
+    color: vars.$light-on-surface-variant;
     min-height: 67px;
 }
 
@@ -1109,7 +1065,7 @@ clip-path seems the cleanest.
     max-width: calc(100% - 2px);
     max-height: calc(100% - 2px);
     margin: 0 auto;
-    box-shadow: 0 0 0 1px #aaa;
+    box-shadow: 0 0 0 1px vars.$light-outline;
     pointer-events: none;
 }
 
@@ -1121,7 +1077,7 @@ clip-path seems the cleanest.
     text-align: center;
     line-height: 19px;
     font-weight: bold;
-    box-shadow: inset 0 0 0 1px #000;
+    box-shadow: inset 0 0 0 1px vars.$light-on-surface;
     user-select: none;
 }
 
@@ -1129,14 +1085,14 @@ clip-path seems the cleanest.
     position: absolute;
     left: 500px;
     top: 500px;
-    background: rgb(221, 221, 221);
+    background: vars.$light-surface;
     display: none;
-    border: 1px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid vars.$light-surface;
+    box-shadow: 0 0 10px rgba(vars.$light-on-surface, 0.5);
 }
 
 .kl-file-save-wrapper {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0 0 1px vars.$light-outline-variant;
     border-radius: 5px;
     margin: 10px 10px 0 10px;
     padding-bottom: 10px;
@@ -1151,8 +1107,8 @@ clip-path seems the cleanest.
     margin-top: 1px;
     overflow: hidden;
 
-    background: #ddd;
-    box-shadow: 0 2px 5px #00000080;
+    background: vars.$light-surface;
+    box-shadow: 0 2px 5px rgba(vars.$light-on-surface, 0.4);
     border-radius: 4px;
 
     display: flex;
@@ -1161,5 +1117,5 @@ clip-path seems the cleanest.
 }
 
 .kl-pinch-overlay {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(vars.$light-surface, 0.5);
 }

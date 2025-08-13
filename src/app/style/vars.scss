@@ -1,4 +1,56 @@
-$activeHighlightColor: #6e9ef8;
-$bodyBgColor: rgb(158, 158, 158);
-$uiBgColor: #ddd;
-$klColor: #2a64f8;
+@use 'sass:color';
+
+// --- THEME ---
+// The single primary color from which all other colors are derived.
+$primary-color: #0d92ff;
+
+
+// --- LIGHT THEME PALETTE (Derived from Primary) ---
+$light-primary: $primary-color;
+$light-on-primary: #ffffff;
+$light-primary-container: color.scale($primary-color, $lightness: 85%);
+$light-on-primary-container: color.scale($primary-color, $lightness: 10%);
+
+$light-surface: color.scale($primary-color, $saturation: -80%, $lightness: 98%);
+$light-on-surface: color.scale($primary-color, $saturation: -80%, $lightness: 10%);
+$light-surface-variant: color.scale($primary-color, $saturation: -70%, $lightness: 90%);
+$light-on-surface-variant: color.scale($primary-color, $saturation: -70%, $lightness: 30%);
+
+$light-background: color.scale($primary-color, $saturation: -85%, $lightness: 95%);
+$light-on-background: color.scale($primary-color, $saturation: -80%, $lightness: 10%);
+$light-outline: color.scale($primary-color, $saturation: -70%, $lightness: 75%);
+$light-outline-variant: color.scale($primary-color, $saturation: -80%, $lightness: 85%);
+
+$light-error: #b3261e;
+$light-on-error: #ffffff;
+$light-error-container: #f9dedc;
+$light-on-error-container: #410e0b;
+
+
+// --- DARK THEME PALETTE (Derived from Primary) ---
+$dark-primary: color.scale($primary-color, $lightness: 70%);
+$dark-on-primary: color.scale($primary-color, $lightness: 15%);
+$dark-primary-container: color.scale($primary-color, $saturation: -50%, $lightness: 25%);
+$dark-on-primary-container: color.scale($primary-color, $lightness: 90%);
+
+$dark-surface: color.scale($primary-color, $saturation: -85%, $lightness: 10%);
+$dark-on-surface: color.scale($primary-color, $saturation: -85%, $lightness: 90%);
+$dark-surface-variant: color.scale($primary-color, $saturation: -80%, $lightness: 25%);
+$dark-on-surface-variant: color.scale($primary-color, $saturation: -80%, $lightness: 75%);
+
+$dark-background: color.scale($primary-color, $saturation: -85%, $lightness: 5%);
+$dark-on-background: color.scale($primary-color, $saturation: -85%, $lightness: 90%);
+$dark-outline: color.scale($primary-color, $saturation: -80%, $lightness: 55%);
+$dark-outline-variant: color.scale($primary-color, $saturation: -85%, $lightness: 25%);
+
+$dark-error: #f2b8b5;
+$dark-on-error: #601410;
+$dark-error-container: #8c1d18;
+$dark-on-error-container: #f9dedc;
+
+// --- LEGACY VARS (for compatibility with original structure if needed) ---
+// These are now mapped to the new Material You-like system
+$activeHighlightColor: $light-primary;
+$bodyBgColor: $light-background;
+$uiBgColor: $light-surface;
+$klColor: $light-primary;

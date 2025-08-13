@@ -1,162 +1,153 @@
+@use 'vars';
+@use 'sass:color';
+
 :root {
-    --ui-bg-dark: #333;
+    --ui-bg-dark: #{vars.$dark-surface};
 }
 
 body.kl-theme-dark {
     color-scheme: dark;
-    color: #ccc;
-    background: rgb(33, 33, 33);
+    color: vars.$dark-on-background;
+    background: vars.$dark-background;
 
     .kl-toolspace {
         background: var(--ui-bg-dark);
     }
 
     .kl-toolspace--left {
-        border-right: 1px solid #626262;
+        border-right: 1px solid vars.$dark-outline;
     }
 
     .kl-toolspace--right {
-        border-left: 1px solid #626262;
+        border-left: 1px solid vars.$dark-outline;
     }
 
     .kl-toolspace-row {
-        background: linear-gradient(
-            to top,
-            rgba(255, 255, 255, 0) 20%,
-            rgba(255, 255, 255, 0.1) 100%
-        );
-        box-shadow: 0 1px 1px #252525;
+        background-color: transparent;
+        box-shadow: 0 1px 1px rgba(vars.$dark-on-surface, 0.1);
     }
 
     .toolspace-row-button-activated {
-        background: #6e6e6e;
+        background: vars.$dark-primary-container;
     }
 
     .toolspace-row-button-hover {
-        background: #535353;
+        background: rgba(vars.$dark-primary, 0.2);
     }
 
     .toolspace-row-button:active {
-        background: #585858;
+        background: rgba(vars.$dark-primary, 0.3);
     }
 
     .toolspace-svg-triangle-button-hover {
-        fill: #535353;
+        fill: rgba(vars.$dark-primary, 0.2);
     }
 
     .toolspace-svg-triangle-button:active {
-        fill: #585858;
+        fill: rgba(vars.$dark-primary, 0.3);
     }
 
     .toolspace-row-button__submit:hover {
-        background: #5786ff;
+        background: vars.$dark-primary;
     }
 
     .tabrow {
-        background: linear-gradient(0deg, rgb(44, 44, 44) 0%, rgba(44, 44, 44, 0) 90%);
-        border-bottom: 1px solid #6e6e6e;
+        background-color: vars.$dark-surface-variant;
+        border-bottom: 1px solid vars.$dark-outline;
     }
 
     .tabrow__tab {
-        color: #fff;
+        color: vars.$dark-on-surface-variant;
     }
 
     .tabrow__tab--opened,
     .tabrow__tab--opened-accented {
-        background-color: #6e6e6e;
+        background-color: vars.$dark-background;
     }
 
     .tabrow__tab div {
-        filter: brightness(0.45);
+        filter: invert(1) brightness(0.9);
     }
 
     .tabrow__tab:not(.tabrow__tab--opened, .tabrow__tab--opened-accented):hover {
-        background-color: #535353;
+        background-color: rgba(vars.$dark-on-surface, 0.1);
     }
 
     .tabrow__tab:active:not(.tabrow__tab--opened-accented, .tabrow__tab--opened) {
-        box-shadow: inset 0 1px #999;
+        box-shadow: inset 0 1px rgba(vars.$dark-on-surface, 0.5);
     }
 
-    .tabrow__tab__rounding-left {
-        background: #6e6e6e;
-    }
-
+    .tabrow__tab__rounding-left,
     .tabrow__tab__rounding-right {
-        background: #6e6e6e;
+        background: vars.$dark-background;
     }
 
     .kl-tool-row-border-right {
-        border-right: 1px solid rgb(48, 48, 48);
+        border-right: 1px solid vars.$dark-outline-variant;
     }
 
     .tool-dropdown-wrapper {
-        background-color: #5e5e5e;
+        background-color: vars.$dark-surface-variant;
     }
 
     .tool-dropdown-button:hover {
-        background: #808080;
+        background: color.scale(vars.$dark-surface-variant, $lightness: 10%);
     }
 
     .tool-dropdown-button:active {
-        background: #585858;
+        background: color.scale(vars.$dark-surface-variant, $lightness: 5%);
     }
 
     .kl-popup {
-        background: #212121a1;
+        background: rgba(vars.$dark-on-surface, 0.5);
     }
 
     .kl-popup-box {
         background-color: var(--ui-bg-dark);
-        box-shadow: 0 0 0 1px #636363;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     .kl-d-modal-root {
-        background: #212121a1;
+        background: rgba(vars.$dark-on-surface, 0.5);
     }
 
     .kl-d-modal {
         background-color: var(--ui-bg-dark);
-        box-shadow: 0 0 0 1px #636363;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     button {
-        color: #ccc;
-        background-color: #4a4a4a;
-        background-image: none;
+        color: vars.$dark-on-surface-variant;
+        background-color: vars.$dark-surface-variant;
+        border: none;
         box-shadow: none;
         user-select: none;
     }
 
     button:hover {
-        background-color: #555;
-        color: #eee;
+        background-color: color.scale(vars.$dark-surface-variant, $lightness: 5%);
+        color: vars.$dark-on-surface;
     }
 
     button:active {
-        background-color: #555;
-        color: #fff;
-        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+        background-color: color.scale(vars.$dark-surface-variant, $lightness: 8%);
+        color: vars.$dark-on-surface;
+        box-shadow: 0 0 0 1px rgba(vars.$dark-on-surface, 0.2);
     }
 
     button:disabled {
-        color: #999;
+        color: rgba(vars.$dark-on-surface, 0.5);
         background-color: transparent;
-        background-image: none;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 0 1px rgba(vars.$dark-on-surface, 0.1);
         pointer-events: none;
     }
 
     .kl-button-primary {
-        background: var(--kl-color);
-        color: #fff;
+        background: vars.$dark-primary;
+        color: vars.$dark-on-primary;
 
         &:hover {
-            background-image: linear-gradient(
-                to top,
-                var(--kl-color) -50%,
-                var(--active-highlight-color) 150%
-            );
+            background: color.scale(vars.$dark-primary, $lightness: 10%);
         }
     }
 
@@ -166,27 +157,29 @@ body.kl-theme-dark {
 
     input,
     textarea {
-        background: #333;
-        color: #ccc;
+        background: vars.$dark-surface-variant;
+        color: vars.$dark-on-surface-variant;
+        border: 1px solid vars.$dark-outline;
     }
 
     input:focus,
     textarea:focus {
-        background: #222;
-        color: #fff;
+        background: vars.$dark-surface;
+        color: vars.$dark-on-surface;
+        border-color: vars.$dark-primary;
     }
 
     .kl-select {
-        background: #222;
-        color: #fff;
-        border: 2px solid #666;
+        background: vars.$dark-surface-variant;
+        color: vars.$dark-on-surface-variant;
+        border: 2px solid vars.$dark-outline;
     }
 
     .kl-checkbox__inner {
-        color: #ccc;
+        color: vars.$dark-on-surface-variant;
 
         &:hover {
-            color: #fff;
+            color: vars.$dark-on-surface;
         }
     }
 
@@ -197,41 +190,41 @@ body.kl-theme-dark {
 
     .kl-option {
         background: var(--ui-bg-dark);
-        color: #ccc;
-        box-shadow: inset 0 0 0 1px #606060;
+        color: vars.$dark-on-surface;
+        box-shadow: inset 0 0 0 1px vars.$dark-outline;
 
         &:not(.kl-option-selected):hover {
-            background: #444;
+            background: color.scale(vars.$dark-surface, $lightness: 5%);
         }
 
         &:not(.kl-option-selected):active {
-            box-shadow: inset 0 0 0 2px #666;
+            box-shadow: inset 0 0 0 2px vars.$dark-outline;
         }
     }
 
     .kl-option-selected {
-        background: #606060;
-        color: #fff;
+        background: vars.$dark-primary-container;
+        color: vars.$dark-on-primary-container;
         box-shadow: inset 0 0 0 2px var(--active-highlight-color);
     }
 
     .kl-box-toggle {
-        color: #ccc;
-        box-shadow: inset 0 0 0 1px #606060;
+        color: vars.$dark-on-surface-variant;
+        box-shadow: inset 0 0 0 1px vars.$dark-outline;
 
         &:not(.kl-box-toggle--active) {
             &:hover {
-                background: #444;
+                background: color.scale(vars.$dark-surface, $lightness: 5%);
             }
             &:active {
-                box-shadow: inset 0 0 0 2px #666;
+                box-shadow: inset 0 0 0 2px vars.$dark-outline;
             }
         }
     }
 
     .kl-box-toggle--active {
-        color: #fff;
-        background: #606060;
+        color: vars.$dark-on-primary-container;
+        background: vars.$dark-primary-container;
         box-shadow: inset 0 0 0 2px var(--active-highlight-color);
     }
 
@@ -241,50 +234,50 @@ body.kl-theme-dark {
 
     .kl-file-no-autosave {
         background: transparent;
-        color: #c9b184;
+        color: vars.$dark-error;
         box-shadow: inset 0 0 0 1px;
     }
 
     .slider-wrapper {
-        background: #222;
-        box-shadow: 0 0 0 1px #777;
-        color: #ddd;
+        background: vars.$dark-surface-variant;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
+        color: vars.$dark-on-surface-variant;
         text-shadow: none;
 
         .slider-inner {
-            background: #555;
-            box-shadow: 1px 0 0 #777;
+            background: color.scale(vars.$dark-surface-variant, $lightness: 10%);
+            box-shadow: 1px 0 0 vars.$dark-outline;
         }
     }
 
     .slider-wrapper--active {
-        box-shadow: 0 0 0 1px #aaa;
-        color: #fff;
+        box-shadow: 0 0 0 1px vars.$dark-primary;
+        color: vars.$dark-on-surface;
 
         .slider-inner {
-            box-shadow: 1px 0 0 #aaa;
+            box-shadow: 1px 0 0 vars.$dark-primary;
         }
     }
 
     .slider-wrapper--disabled {
         box-shadow: none;
-        color: #999;
+        color: rgba(vars.$dark-on-surface-variant, 0.5);
     }
 
     .info-hint {
         background: none;
-        border: 1px solid #a66969;
-        color: #f5a7a7;
+        border: 1px solid vars.$dark-error;
+        color: vars.$dark-error;
     }
 
     .kl-2-tabs {
         .kl-2-tabs__left,
         .kl-2-tabs__right {
-            border: 1px solid rgba(113, 112, 112, 0.3);
-            color: #ccc;
+            border: 1px solid vars.$dark-outline;
+            color: vars.$dark-on-surface-variant;
             border-bottom: none;
             &:hover {
-                background: #444;
+                background: vars.$dark-surface-variant;
             }
         }
 
@@ -299,13 +292,13 @@ body.kl-theme-dark {
         }
 
         .kl-2-tabs--active {
-            color: #fff;
-            background: #444;
+            color: vars.$dark-on-primary-container;
+            background: vars.$dark-primary-container;
             border: 1px solid var(--active-highlight-color);
             border-bottom: none;
 
             &:hover {
-                background: #fff;
+                background: vars.$dark-primary-container;
             }
         }
     }
@@ -319,61 +312,61 @@ body.kl-theme-dark {
     }
 
     .kl-preview-wrapper {
-        background: rgb(33, 33, 33);
+        background: vars.$dark-background;
         box-shadow:
-            inset 0 1px #636363,
-            inset 0 -1px #636363;
+            inset 0 1px vars.$dark-outline,
+            inset 0 -1px vars.$dark-outline;
 
         .kl-preview-wrapper__canvas {
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 1px rgba(vars.$dark-on-surface, 0.25);
         }
     }
 
     .kl-edit-crop-preview {
-        border-top: 1px solid #636363;
-        border-bottom: 1px solid #636363;
+        border-top: 1px solid vars.$dark-outline;
+        border-bottom: 1px solid vars.$dark-outline;
     }
 
     .kl-transparent-preview {
         box-shadow:
-            inset 0 1px #636363,
-            inset 0 -1px #636363;
+            inset 0 1px vars.$dark-outline,
+            inset 0 -1px vars.$dark-outline;
 
         .kl-transparent-preview__canvas {
-            box-shadow: 0 0 0 1px #777;
+            box-shadow: 0 0 0 1px vars.$dark-outline;
         }
     }
 
     .kl-merge-preview {
-        box-shadow: 0 0 0 1px #636363;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     a:link,
     a:not([href]),
     a:visited {
-        color: #64acff;
+        color: vars.$dark-primary;
 
         &:hover {
-            color: #b2e8ff;
+            color: color.scale(vars.$dark-primary, $lightness: 15%);
         }
     }
 
     .kl-color-picker__h,
     .kl-color-picker__sv,
     .kl-color-picker__preview {
-        box-shadow: 0 0 0 1px rgb(100, 100, 100);
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     .kl-color-picker--active {
-        box-shadow: 0 0 0 1px #999;
+        box-shadow: 0 0 0 1px vars.$dark-primary;
     }
 
     .kl-color-picker__secondary {
-        box-shadow: 0 0 0 1px #7a7a7a;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     .kl-stabilizer {
-        color: #ccc;
+        color: vars.$dark-on-surface-variant;
     }
 
     .brush-alpha,
@@ -382,69 +375,70 @@ body.kl-theme-dark {
     }
 
     .kl-layer-preview {
-        color: #ccc;
+        color: vars.$dark-on-surface-variant;
         canvas {
-            box-shadow: 0 0 0 1px #7a7a7a;
+            box-shadow: 0 0 0 1px vars.$dark-outline;
         }
     }
 
     .kl-import-note,
     .kl-toolspace-note {
         background: none;
-        color: #d5d558;
-        border: 1px solid #d5d558;
+        color: vars.$dark-error;
+        border: 1px solid vars.$dark-error;
     }
 
     .kl-curves-graph {
         canvas {
-            background: #dedede;
+            background: vars.$dark-surface;
             filter: invert(1) hue-rotate(180deg);
         }
     }
 
     .kl-curves-graph__grip {
-        background: #fff;
+        background: vars.$dark-on-surface;
         box-shadow: none;
     }
 
     .kl-storage-preview {
-        background: #212121;
-        box-shadow: inset 0 0 0 1px #5e5e5e;
-        color: #aaa;
+        background: vars.$dark-background;
+        box-shadow: inset 0 0 0 1px vars.$dark-outline;
+        color: vars.$dark-on-surface-variant;
     }
 
     .kl-storage-preview__im {
-        box-shadow: 0 0 0 1px #5e5e5e;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     .kl-info-btn {
-        box-shadow: inset 0 0 0 1px #ffff;
+        box-shadow: inset 0 0 0 1px vars.$dark-on-surface;
     }
 
     .kl-layer {
         background: transparent;
-        border: 1px solid #4f4f4f;
+        border: 1px solid vars.$dark-outline-variant;
         .kl-layer__label,
         .kl-layer__opacity-label {
-            color: #ccc;
+            color: vars.$dark-on-surface-variant;
         }
     }
 
     .kl-layer--selected {
-        background: #505050;
+        background: vars.$dark-primary-container;
         border: 1px solid var(--active-highlight-color);
 
         .kl-layer__label {
-            color: #fff;
+            color: vars.$dark-on-primary-container;
         }
     }
 
     .kl-point-slider__line {
-        background: #777;
+        background: vars.$dark-outline;
     }
 
     .kl-point-slider__point {
         box-shadow: none;
+        background-color: vars.$dark-on-surface;
     }
 
     .kl-overlay-toolspace {
@@ -454,37 +448,37 @@ body.kl-theme-dark {
     }
 
     .kl-overlay-toolspace__color {
-        box-shadow: 0 0 0 1px #6e6e6e;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
     }
 
     .image-toggle {
         &:not(.image-toggle-active) {
             &:hover {
-                background: #606060;
+                background: color.scale(vars.$dark-surface-variant, $lightness: 5%);
             }
             &:active {
-                box-shadow: #838383 0 0 0 2px;
+                box-shadow: vars.$dark-outline 0 0 0 2px;
             }
         }
     }
 
     .image-toggle-active {
-        background: #606060;
+        background: vars.$dark-primary-container;
     }
 
     .kl-file-save-wrapper {
-        box-shadow: inset 0 0 0 1px #fff3;
+        box-shadow: inset 0 0 0 1px rgba(vars.$dark-on-surface, 0.2);
     }
 
     .grid-hr {
-        border-bottom: 1px solid #fff3;
+        border-bottom: 1px solid rgba(vars.$dark-on-surface, 0.2);
         border-top: none;
     }
 
     .kl-color-option {
-        box-shadow: 0 0 0 1px #7a7a7a;
+        box-shadow: 0 0 0 1px vars.$dark-outline;
         &:not(.kl-color-option--active):active {
-            box-shadow: 0 0 0 2px #7a7a7a;
+            box-shadow: 0 0 0 2px vars.$dark-outline;
         }
     }
 
@@ -495,11 +489,12 @@ body.kl-theme-dark {
     }
 
     .kl-text-error {
-        color: #ff3838;
+        color: vars.$dark-error;
     }
 
     .kl-dropdown-menu {
         background: var(--ui-bg-dark);
+        box-shadow: 0 2px 5px rgba(vars.$dark-background, 0.5);
     }
 
     .kl-pinch-overlay {
