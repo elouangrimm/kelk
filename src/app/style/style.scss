@@ -1,5 +1,6 @@
 @use 'vars';
 @use './dark';
+@use 'sass:color';
 
 :root {
     --active-highlight-color: #{vars.$activeHighlightColor};
