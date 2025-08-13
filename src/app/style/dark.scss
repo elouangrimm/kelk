@@ -160,7 +160,6 @@ body.kl-theme-dark {
 
         &:hover {
             background-image: none;
-            // Corrected Line: Use the Sass variable with the lighten function
             background-color: lighten($primary-color-value, 10%);
         }
     }
