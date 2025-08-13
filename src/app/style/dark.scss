@@ -1,0 +1,435 @@
+// dark.scss
+@use 'sass:color';
+@use 'vars';
+
+// --- Color Palette Generation (Dark Theme) ---
+$primary-color: vars.$primary-color;
+$active-highlight-color: color.scale($primary-color, $lightness: 10%);
+$dark-body-bg: #212121;
+$dark-ui-bg: #333;
+$dark-text-color: #ccc;
+$dark-text-color-light: #fff;
+$dark-border-color: #626262;
+$dark-border-color-light: #303030;
+$dark-shadow-color: #252525;
+$dark-button-bg: #4a4a4a;
+$dark-button-hover-bg: #555;
+$dark-button-active-bg: #585858;
+$dark-button-disabled-text: #999;
+$dark-activated-bg: #6e6e6e;
+$dark-tab-bg: #2c2c2c;
+$dark-tab-active-bg: #6e6e6e;
+$dark-popup-overlay-bg: rgba(desaturate(color.scale($primary-color, $lightness: -85%), 90%), 0.63);
+$dark-info-hint-border: color.scale(adjust($primary-color, $hue: -220deg, $saturation: -30%), $lightness: -20%);
+$dark-info-hint-text: color.scale(adjust($primary-color, $hue: -220deg, $saturation: -30%), $lightness: 20%);
+$dark-input-bg: #333;
+$dark-input-focus-bg: #222;
+$dark-input-border: #666;
+$dark-option-bg: $dark-ui-bg;
+$dark-option-hover-bg: #444;
+$dark-option-active-border: #666;
+$dark-option-selected-bg: #606060;
+$dark-option-border: #606060;
+
+
+body.kl-theme-dark {
+    color-scheme: dark;
+    color: $dark-text-color;
+    background: $dark-body-bg;
+
+    a:link,
+    a:not([href]),
+    a:visited {
+        color: color.scale($primary-color, $lightness: 30%);
+
+        &:hover {
+            color: color.scale($primary-color, $lightness: 60%);
+        }
+    }
+
+    .kl-toolspace {
+        background: $dark-ui-bg;
+    }
+
+    .kl-toolspace--left {
+        border-right: 1px solid $dark-border-color;
+    }
+
+    .kl-toolspace--right {
+        border-left: 1px solid $dark-border-color;
+    }
+
+    .kl-toolspace-row {
+        background: $dark-ui-bg; // Gradient removed
+        box-shadow: 0 1px 1px $dark-shadow-color;
+    }
+
+    .toolspace-row-button-activated {
+        background: $dark-activated-bg;
+    }
+
+    .toolspace-row-button-hover {
+        background: $dark-button-hover-bg;
+    }
+
+    .toolspace-row-button:active {
+        background: $dark-button-active-bg;
+    }
+
+    .toolspace-svg-triangle-button-hover {
+        fill: $dark-button-hover-bg;
+    }
+
+    .toolspace-svg-triangle-button:active {
+        fill: $dark-button-active-bg;
+    }
+
+    .toolspace-row-button__submit:hover {
+        background: $active-highlight-color;
+    }
+
+    .tabrow {
+        background: $dark-tab-bg; // Gradient removed
+        border-bottom: 1px solid $dark-activated-bg;
+    }
+
+    .tabrow__tab {
+        color: $dark-text-color-light;
+    }
+
+    .tabrow__tab--opened,
+    .tabrow__tab--opened-accented {
+        background-color: $dark-tab-active-bg;
+    }
+
+    .tabrow__tab:not(.tabrow__tab--opened, .tabrow__tab--opened-accented):hover {
+        background-color: $dark-button-hover-bg;
+    }
+    
+    .tabrow__tab__rounding-left,
+    .tabrow__tab__rounding-right {
+        background: $dark-tab-active-bg;
+    }
+
+    .kl-tool-row-border-right {
+        border-right: 1px solid $dark-border-color-light;
+    }
+
+    .tool-dropdown-wrapper {
+        background-color: $dark-button-active-bg;
+    }
+
+    .tool-dropdown-button:hover {
+        background: #808080;
+    }
+
+    .tool-dropdown-button:active {
+        background: $dark-button-active-bg;
+    }
+
+    .kl-popup {
+        background: $dark-popup-overlay-bg;
+    }
+
+    .kl-popup-box, .kl-d-modal {
+        background-color: $dark-ui-bg;
+        box-shadow: 0 0 0 1px $dark-border-color;
+    }
+
+    button {
+        color: $dark-text-color;
+        background-color: $dark-button-bg;
+        box-shadow: none;
+    }
+
+    button:hover {
+        background-color: $dark-button-hover-bg;
+        color: $dark-text-color-light;
+    }
+
+    button:active {
+        background-color: $dark-button-active-bg;
+        color: $dark-text-color-light;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    button:disabled {
+        color: $dark-button-disabled-text;
+        background-color: transparent;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .kl-button-primary {
+        background: $primary-color;
+        color: #fff;
+        &:hover {
+            background: $active-highlight-color;
+        }
+    }
+    
+    input,
+    textarea {
+        background: $dark-input-bg;
+        color: $dark-text-color;
+        border-color: $dark-input-border;
+    }
+
+    input:focus,
+    textarea:focus {
+        background: $dark-input-focus-bg;
+        color: #fff;
+    }
+
+    .kl-select {
+        background: $dark-input-focus-bg;
+        color: #fff;
+        border: 2px solid $dark-input-border;
+    }
+
+    .kl-checkbox__inner {
+        color: $dark-text-color;
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    .kl-checkbox--highlight {
+        background: none;
+        box-shadow: 0 0 0 1px $active-highlight-color;
+    }
+
+    .kl-option {
+        background: $dark-option-bg;
+        color: $dark-text-color;
+        box-shadow: inset 0 0 0 1px $dark-option-border;
+
+        &:not(.kl-option-selected):hover {
+            background: $dark-option-hover-bg;
+        }
+
+        &:not(.kl-option-selected):active {
+            box-shadow: inset 0 0 0 2px $dark-option-active-border;
+        }
+    }
+
+    .kl-option-selected {
+        background: $dark-option-selected-bg;
+        color: #fff;
+        box-shadow: inset 0 0 0 2px $active-highlight-color;
+    }
+
+    .kl-box-toggle {
+        color: $dark-text-color;
+        box-shadow: inset 0 0 0 1px $dark-option-border;
+        &:not(.kl-box-toggle--active) {
+            &:hover {
+                background: $dark-option-hover-bg;
+            }
+            &:active {
+                box-shadow: inset 0 0 0 2px $dark-option-active-border;
+            }
+        }
+    }
+
+    .kl-box-toggle--active {
+        color: #fff;
+        background: $dark-option-selected-bg;
+        box-shadow: inset 0 0 0 2px $active-highlight-color;
+    }
+
+    .kl-file-no-autosave {
+        background: transparent;
+        color: color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 24%);
+        box-shadow: inset 0 0 0 1px;
+    }
+
+    .slider-wrapper {
+        background: $dark-input-focus-bg;
+        box-shadow: 0 0 0 1px #777;
+        color: $dark-text-color;
+        .slider-inner {
+            background: $dark-button-hover-bg;
+            box-shadow: 1px 0 0 #777;
+        }
+    }
+
+    .slider-wrapper--active {
+        box-shadow: 0 0 0 1px #aaa;
+        color: #fff;
+        .slider-inner {
+            box-shadow: 1px 0 0 #aaa;
+        }
+    }
+
+    .slider-wrapper--disabled {
+        box-shadow: none;
+        color: $dark-button-disabled-text;
+    }
+
+    .info-hint {
+        background: none;
+        border: 1px solid $dark-info-hint-border;
+        color: $dark-info-hint-text;
+    }
+
+    .kl-2-tabs {
+        .kl-2-tabs__left,
+        .kl-2-tabs__right {
+            border: 1px solid rgba(113, 112, 112, 0.3);
+            color: $dark-text-color;
+            &:hover {
+                background: $dark-option-hover-bg;
+            }
+        }
+        .kl-2-tabs--active {
+            color: #fff;
+            background: $dark-option-hover-bg;
+            border: 1px solid $active-highlight-color;
+            &:hover {
+                background: $dark-option-hover-bg;
+            }
+        }
+    }
+
+    .kl-preview-wrapper {
+        background: $dark-body-bg;
+        box-shadow: inset 0 1px $dark-border-color, inset 0 -1px $dark-border-color;
+        .kl-preview-wrapper__canvas {
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    .kl-edit-crop-preview {
+        border-top: 1px solid $dark-border-color;
+        border-bottom: 1px solid $dark-border-color;
+    }
+
+    .kl-transparent-preview {
+        box-shadow: inset 0 1px $dark-border-color, inset 0 -1px $dark-border-color;
+        .kl-transparent-preview__canvas {
+            box-shadow: 0 0 0 1px #777;
+        }
+    }
+
+    .kl-merge-preview {
+        box-shadow: 0 0 0 1px $dark-border-color;
+    }
+
+    .kl-color-picker__h,
+    .kl-color-picker__sv,
+    .kl-color-picker__preview {
+        box-shadow: 0 0 0 1px #646464;
+    }
+
+    .kl-color-picker--active {
+        box-shadow: 0 0 0 1px #999;
+    }
+
+    .kl-color-picker__secondary {
+        box-shadow: 0 0 0 1px #7a7a7a;
+    }
+    
+    .kl-layer-preview {
+        color: $dark-text-color;
+        canvas {
+            box-shadow: 0 0 0 1px #7a7a7a;
+        }
+    }
+
+    .kl-import-note,
+    .kl-toolspace-note {
+        background: none;
+        color: desaturate(color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 25%), 20%);
+        border: 1px solid desaturate(color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 25%), 20%);
+    }
+
+    .kl-curves-graph__grip {
+        background: #fff;
+        box-shadow: none;
+    }
+
+    .kl-storage-preview {
+        background: $dark-body-bg;
+        box-shadow: inset 0 0 0 1px $dark-button-active-bg;
+        color: #aaa;
+    }
+
+    .kl-storage-preview__im {
+        box-shadow: 0 0 0 1px $dark-button-active-bg;
+    }
+
+    .kl-info-btn {
+        box-shadow: inset 0 0 0 1px #ffff;
+    }
+
+    .kl-layer {
+        background: transparent;
+        border: 1px solid #4f4f4f;
+        .kl-layer__label,
+        .kl-layer__opacity-label {
+            color: $dark-text-color;
+        }
+    }
+
+    .kl-layer--selected {
+        background: $dark-button-hover-bg;
+        border: 1px solid $active-highlight-color;
+        .kl-layer__label {
+            color: #fff;
+        }
+    }
+
+    .kl-point-slider__line {
+        background: #777;
+    }
+
+    .kl-point-slider__point {
+        box-shadow: none;
+    }
+
+    .kl-overlay-toolspace__color {
+        box-shadow: 0 0 0 1px $dark-activated-bg;
+    }
+
+    .image-toggle {
+        &:not(.image-toggle-active) {
+            &:hover {
+                background: $dark-option-selected-bg;
+            }
+            &:active {
+                box-shadow: #838383 0 0 0 2px;
+            }
+        }
+    }
+
+    .image-toggle-active {
+        background: $dark-option-selected-bg;
+    }
+
+    .kl-file-save-wrapper, .grid-hr {
+        border-color: rgba(255,255,255,0.2);
+    }
+    
+    .kl-color-option {
+        box-shadow: 0 0 0 1px #7a7a7a;
+        &:not(.kl-color-option--active):active {
+            box-shadow: 0 0 0 2px #7a7a7a;
+        }
+    }
+
+    .kl-color-option--active {
+        box-shadow: 0 0 0 2px $active-highlight-color, 0 0 5px 0 $active-highlight-color;
+    }
+
+    .kl-text-error {
+        color: #ff3838;
+    }
+
+    .kl-dropdown-menu {
+        background: $dark-ui-bg;
+    }
+
+    .kl-pinch-overlay {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}

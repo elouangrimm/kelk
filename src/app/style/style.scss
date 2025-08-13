@@ -1,39 +1,62 @@
-@use 'theming';
+/* --- entrypoint for app ---*/
+@use 'sass:color';
+@use 'vars';
+@use 'dark'; // Applies dark theme overrides
 
-// Apply dark theme by default
-:root {
-  @include theming.apply-theme(theming.$dark-theme);
-}
+// --- Color Palette Generation (Light Theme) ---
+$active-highlight-color: color.scale(vars.$primary-color, $lightness: 10%);
+$body-bg-color: color.scale(desaturate(vars.$primary-color, 85%), $lightness: 48%);
+$ui-bg-color: color.scale(desaturate(vars.$primary-color, 90%), $lightness: 40%);
+$text-color: desaturate(color.scale(vars.$primary-color, $lightness: -65%), 80%);
+$text-color-light: desaturate(color.scale(vars.$primary-color, $lightness: -55%), 80%);
+$text-color-link-visited: desaturate(color.scale(vars.$primary-color, $lightness: -25%), 50%);
+$border-color: desaturate(color.scale(vars.$primary-color, $lightness: -5%), 80%);
+$border-color-light: desaturate(color.scale(vars.$primary-color, $lightness: 25%), 80%);
+$shadow-color: rgba(desaturate(color.scale(vars.$primary-color, $lightness: -95%), 90%), 0.2);
+$shadow-color-light: rgba(desaturate(color.scale(vars.$primary-color, $lightness: -95%), 90%), 0.05);
+$button-bg: color.scale(desaturate(vars.$primary-color, 95%), $lightness: 50%);
+$button-hover-bg: #fff;
+$button-active-bg: $ui-bg-color;
+$button-disabled-bg: $ui-bg-color;
+$button-disabled-text: desaturate(color.scale(vars.$primary-color, $lightness: 10%), 80%);
+$activated-bg: #fff;
+$tab-bg: color.scale(desaturate(vars.$primary-color, 80%), $lightness: 68%);
+$tab-active-bg: color.scale(desaturate(vars.$primary-color, 80%), $lightness: 85%);
+$popup-bg: color.scale(desaturate(vars.$primary-color, 80%), $lightness: 42%);
+$popup-overlay-bg: rgba(desaturate(color.scale(vars.$primary-color, $lightness: -70%), 50%), 0.5);
+$info-hint-bg: color.scale(adjust(vars.$primary-color, $hue: -220deg), $lightness: 30%);
+$info-hint-border: color.scale(adjust(vars.$primary-color, $hue: -220deg), $lightness: -10%);
+$input-bg: #fff;
+$input-border: desaturate(color.scale(vars.$primary-color, $lightness: 20%), 80%);
+$input-focus-border: desaturate(color.scale(vars.$primary-color, $lightness: -20%), 80%);
+$option-color: rgba($text-color, 0.6);
+$option-border: rgba($text-color, 0.3);
+$option-hover-bg: color.scale(desaturate(vars.$primary-color, 90%), $lightness: 45%);
 
-// Apply light theme if the user prefers it
-@media (prefers-color-scheme: light) {
-  :root {
-    @include theming.apply-theme(theming.$light-theme);
-  }
-}
-
-// --- Base Styles ---
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
-body, html {
+body {
+    overflow: hidden;
+    font-size: 16px;
+    overscroll-behavior-x: none;
+    color-scheme: light;
+    background-color: $body-bg-color;
+    color: $text-color;
+}
+
+body,
+html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     touch-action: none;
+
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
-}
-
-body {
-    background: var(--color-background);
-    color: var(--color-on-background);
-    overflow: hidden;
-    font-size: 16px;
-    overscroll-behavior-x: none;
 }
 
 .g-root {
@@ -41,187 +64,458 @@ body {
     font-family: system-ui, sans-serif;
 }
 
-// --- Links ---
 a:link,
-a:not([href]),
-a:visited {
-    color: var(--color-primary);
+a:not([href]) {
+    color: vars.$primary-color;
     text-decoration: underline;
     cursor: pointer;
-    &:hover {
-        color: var(--color-secondary);
-    }
+}
+a:visited {
+    color: $text-color-link-visited;
+    text-decoration: underline;
 }
 
-// --- Forms ---
-input,
-textarea {
-    background: var(--color-surface-variant);
-    color: var(--color-on-surface-variant);
-    border: 1px solid var(--color-outline);
-    border-radius: 4px;
-    padding: 8px;
-    &:focus {
-        background: var(--color-surface);
-        color: var(--color-on-surface);
-        border-color: var(--color-primary);
-        box-shadow: 0 0 0 1px var(--color-primary);
-    }
+a:hover,
+a:not([href]):hover {
+    color: #000;
+    text-decoration: underline;
 }
 
-button {
-    background-color: var(--color-primary-container);
-    color: var(--color-on-primary-container);
-    border: none;
-    border-radius: 24px;
-    padding: 10px 24px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    &:hover {
-        background-color: var(--color-primary-container-hover);
-    }
-    &:active {
-        background-color: var(--color-primary-container-active);
-    }
-    &:disabled {
-        background-color: rgba(var(--color-on-surface-rgb), 0.12);
-        color: rgba(var(--color-on-surface-rgb), 0.38);
-        cursor: not-allowed;
-    }
+.kl-select {
+    background: $input-bg;
 }
 
-.kl-button-primary {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-    &:hover {
-        background-color: var(--color-primary-hover);
-    }
+.grid-hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    clear: both;
 }
-
-
-// --- Layout & Components ---
 
 .kl-toolspace {
-    background: var(--color-surface);
-    border-color: var(--color-outline);
+    background-color: $ui-bg-color;
 }
 
 .kl-toolspace--left {
-    border-right: 1px solid var(--color-outline);
+    border-right: 1px solid $border-color;
 }
 
 .kl-toolspace--right {
-    border-left: 1px solid var(--color-outline);
+    border-left: 1px solid $border-color;
 }
 
 .kl-toolspace-row {
-    background: linear-gradient(
-        to top,
-        transparent 20%,
-        rgba(var(--color-on-surface-rgb), 0.05) 100%
-    );
-    box-shadow: 0 1px 1px rgba(var(--color-shadow-rgb), 0.2);
+    background-color: $ui-bg-color;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px $border-color;
 }
 
 .toolspace-row-button-hover {
-    background: rgba(var(--color-on-surface-rgb), 0.08);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.toolspace-row-button:active,
+.toolspace-triangle-button:active {
+    background-color: $button-active-bg;
+    box-shadow: inset 2px 2px 10px $shadow-color !important;
+}
+
+.toolspace-svg-triangle-button-hover {
+    fill: rgba(255, 255, 255, 0.7);
+}
+
+.toolspace-svg-triangle-button:active {
+    fill: $button-active-bg;
+    filter: url(#innershadow);
 }
 
 .toolspace-row-button-activated {
-    background: var(--color-secondary-container);
+    background: $activated-bg;
+    box-shadow: inset 0 2px 0 0 $active-highlight-color;
+    pointer-events: none;
 }
 
-.tabrow {
-    border-bottom: 1px solid var(--color-outline);
+.kl-tool-row-border-right {
+    border-right: 1px solid $border-color-light;
 }
 
-.tabrow__tab {
-    color: var(--color-on-surface-variant);
-    &:hover {
-        background-color: rgba(var(--color-on-surface-rgb), 0.08);
-    }
+.kl-color-picker__h,
+.kl-color-picker__sv,
+.kl-color-picker__preview {
+    box-shadow: 0 0 0 1px $border-color;
 }
 
-.tabrow__tab--opened,
-.tabrow__tab--opened-accented {
-    background-color: var(--color-surface);
-    color: var(--color-on-surface);
+.kl-color-picker--active {
+    box-shadow: 0 0 0 1px #fff;
+    z-index: 1;
 }
 
-.tabrow__tab__rounding-left,
-.tabrow__tab__rounding-right {
-    background: var(--color-surface);
+.kl-color-picker__secondary {
+    box-shadow: 0 0 0 1px $border-color;
 }
 
-
-.kl-popup,
-.kl-d-modal-root {
-    background: rgba(var(--color-shadow-rgb), 0.4);
-}
-
-.kl-popup-box,
-.kl-d-modal {
-    background-color: var(--color-surface);
-    box-shadow: 0 0 0 1px var(--color-outline);
-    color: var(--color-on-surface);
-    border-radius: 28px;
-    padding: 24px;
-}
-
-.kl-option {
-    background: transparent;
-    color: var(--color-on-surface-variant);
-    border: 1px solid var(--color-outline);
+.slider-wrapper {
     border-radius: 8px;
-
-    &:not(.kl-option-selected):hover {
-        background: rgba(var(--color-on-surface-rgb), 0.08);
-    }
+    box-shadow: 0.5px 1px 0 0 rgba(255, 255, 255, 0.8);
+    background-color: $button-bg;
+    color: $text-color;
+    cursor: ew-resize;
 }
 
-.kl-option-selected {
-    background: var(--color-secondary-container);
-    color: var(--color-on-secondary-container);
-    border-color: var(--color-secondary);
+.slider-wrapper--active {
+    background-color: $button-active-bg;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+    color: #000;
+}
+
+.slider-inner {
+    background-color: #fff;
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3), 2px 2px 6px rgba(145, 145, 145, 0.49);
+    border-radius: 6px 0 0 0;
+}
+
+.kl-point-slider__line {
+    height: 2px;
+    background: $border-color;
+}
+
+.kl-point-slider__point {
+    background-color: $button-bg;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+button {
+    padding: 5px;
+    min-width: 30px;
+    font-size: 15px;
+    line-height: 17px;
+    color: $text-color-light;
+    border: none;
+    background-color: $button-bg;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px $shadow-color-light, 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px $shadow-color-light;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+button:hover {
+    background-color: $button-hover-bg;
+    color: $text-color-light;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: $button-active-bg;
+    box-shadow: inset 2px 2px 10px $shadow-color, 0 2px 2px $button-active-bg;
+}
+
+button:disabled {
+    padding: 5px;
+    min-width: 30px;
+    font-size: 15px;
+    color: $button-disabled-text;
+    border: none;
+    background-color: $button-disabled-bg;
+    border-radius: 4px;
+    cursor: default;
+    box-shadow: 0 0 0 1px $shadow-color-light;
+}
+
+.kl-button-primary {
+    background: vars.$primary-color;
+    color: #fff;
+}
+.kl-button-primary:hover,
+.kl-button-primary:active {
+    background: $active-highlight-color;
+    color: #fff;
+    box-shadow: unset;
+}
+
+.kl-popup {
+    background: $popup-overlay-bg;
+}
+
+.kl-popup-box {
+    background-color: $popup-bg;
+    box-shadow: rgba(0, 0, 0, 0.45) 0 5px 60px;
+}
+
+.kl-d-modal-root {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.kl-d-modal {
+    background: $popup-bg;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 60px;
+}
+
+.kl-checkbox--highlight {
+    background: color.scale($active-highlight-color, $lightness: 40%);
+}
+
+.kl-checkbox__inner {
+    color: rgba(0, 0, 0, 0.6);
+    &:hover {
+        color: rgba(0, 0, 0, 1);
+    }
 }
 
 .kl-layer {
-    background: transparent;
-    border: 1px solid var(--color-outline);
-    .kl-layer__label {
-        color: var(--color-on-surface-variant);
+    background-color: $ui-bg-color;
+    border: 1px solid $border-color;
+    .kl-layer__label,
+    .kl-layer__opacity-label {
+        color: $text-color;
     }
 }
 
 .kl-layer--selected {
-    background: var(--color-primary-container);
-    border: 1px solid var(--color-primary);
+    background: #fff;
+    border: 1px solid $active-highlight-color;
     .kl-layer__label {
-        color: var(--color-on-primary-container);
-    }
-}
-
-
-// Invert filter for dark theme icons
-.dark-invert {
-    filter: invert(1);
-}
-
-@media (prefers-color-scheme: light) {
-    .dark-invert {
-        filter: none;
+        color: #000;
     }
 }
 
 .info-hint {
-    background: var(--color-error-container);
-    border: 1px solid var(--color-error);
-    color: var(--color-on-error-container);
-    border-radius: 8px;
-    padding: 16px;
+    background: $info-hint-bg;
+    border: 1px solid $info-hint-border;
+}
+
+textarea,
+input {
+    border: 1px solid $input-border;
+    background: $input-bg;
+}
+
+textarea:focus,
+input:focus {
+    border: 1px solid $input-focus-border;
+    box-shadow: 0 0 10px $shadow-color;
+    background: #fff;
+}
+
+.kl-textarea::placeholder,
+.kl-input::placeholder {
+    color: desaturate(color.scale($text-color, $lightness: 40%), 50%);
+}
+
+.tabrow {
+    background: $tab-bg;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.tabrow__tab:active:not(.tabrow__tab--opened-accented, .tabrow__tab--opened) {
+    box-shadow: inset 0 1px rgba(0,0,0,0.3);
+}
+
+.tabrow__tab--opened,
+.tabrow__tab--opened-accented {
+    background-color: $tab-active-bg;
+}
+
+.tabrow__tab--opened-accented {
+    box-shadow: inset 0 2px 0 0 $active-highlight-color;
+}
+
+.tabrow__tab__rounding-left,
+.tabrow__tab__rounding-right {
+    background: $tab-active-bg;
+}
+
+.kl-option {
+    background: $ui-bg-color;
+    color: $option-color;
+    box-shadow: inset 0 0 0 1px $option-border;
+    &:not(.kl-option-selected) {
+        &:hover {
+            background: $option-hover-bg;
+        }
+        &:active {
+            box-shadow: inset 0 0 0 2px $option-border;
+        }
+    }
+}
+
+.kl-option-selected {
+    background: #fff;
+    color: #000;
+    box-shadow: inset 0 0 0 2px $active-highlight-color;
+}
+
+.kl-box-toggle {
+    color: $option-color;
+    box-shadow: inset 0 0 0 1px $option-border;
+    &:not(.kl-box-toggle--active) {
+        &:hover {
+            background: $option-hover-bg;
+        }
+        &:active {
+            box-shadow: inset 0 0 0 2px $option-border;
+        }
+    }
+}
+
+.kl-box-toggle--active {
+    background: #fff;
+    color: #000;
+    box-shadow: inset 0 0 0 2px $active-highlight-color;
+}
+
+.kl-color-option {
+    box-shadow: 0 0 0 1px $border-color;
+    &:not(.kl-color-option--active):active {
+        box-shadow: 0 0 0 2px $border-color;
+    }
+}
+
+.kl-color-option--active {
+    box-shadow: 0 0 0 2px $active-highlight-color, 0 0 5px 0 $active-highlight-color;
+}
+
+.tool-dropdown-wrapper {
+    background: $button-bg;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.tool-dropdown-button:hover {
+    background: #fff;
+}
+
+.tool-dropdown-button:active {
+    background-color: $button-active-bg;
+    box-shadow: inset 2px 2px 10px $shadow-color;
+}
+
+.image-toggle:not(.image-toggle-active) {
+    box-shadow: $border-color 0 0 0 1px;
+    &:hover {
+        background: #fff;
+    }
+    &:active {
+        box-shadow: $border-color 0 0 0 2px;
+    }
+}
+.image-toggle-active {
+    box-shadow: $active-highlight-color 0 0 0 2px;
+    background-color: #fff;
+}
+
+.kl-scroller {
+    background-color: rgba($body-bg-color, 0.9);
+}
+
+.kl-2-tabs {
+    .kl-2-tabs__left,
+    .kl-2-tabs__right {
+        border: 1px solid rgba(0, 0, 0, 0.6);
+        color: rgba(0, 0, 0, 0.6);
+        &:hover {
+            background: $option-hover-bg;
+        }
+    }
+    .kl-2-tabs--active {
+        color: #000;
+        background: #fff;
+        border: 1px solid $active-highlight-color;
+        &:hover {
+            background: #fff;
+        }
+    }
+}
+
+.kl-layer-preview {
+    color: $text-color-light;
+    canvas {
+        box-shadow: 0 0 0 1px $border-color;
+    }
+}
+
+.kl-edit-crop-preview {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
 }
 
 .kl-text-error {
-    color: var(--color-error);
+    color: #f00;
+}
+
+.kl-file-no-autosave {
+    background: color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: 40%);
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.kl-preview-wrapper {
+    background-color: $body-bg-color;
+    box-shadow: inset 0 1px $shadow-color, inset 0 -1px $shadow-color;
+}
+
+.kl-preview-wrapper__canvas {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.kl-transparent-preview {
+    box-shadow: inset 0 1px $shadow-color, inset 0 -1px $shadow-color;
+}
+
+.kl-transparent-preview__canvas,
+.kl-merge-preview {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.kl-stabilizer {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.kl-toolspace-note,
+.kl-import-note {
+    color: desaturate(color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: -20%), 20%);
+    background: rgba(adjust(vars.$primary-color, $hue: -170deg), 0.5);
+    border: 1px solid color.scale(adjust(vars.$primary-color, $hue: -170deg), $lightness: -10%);
+}
+
+.kl-curves-graph {
+    canvas {
+        background: $ui-bg-color;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.kl-curves-graph__grip {
+    background: #fff;
+    box-shadow: inset 0 0 0 2px #000;
+}
+
+.kl-storage-preview {
+    box-shadow: inset 0 0 0 1px $border-color;
+    background: $ui-bg-color;
+    color: $text-color-light;
+}
+
+.kl-storage-preview__im {
+    box-shadow: 0 0 0 1px $border-color;
+}
+
+.kl-info-btn {
+    box-shadow: inset 0 0 0 1px #000;
+}
+
+.kl-overlay-toolspace {
+    background: $ui-bg-color;
+    border: 1px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.kl-file-save-wrapper {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.kl-dropdown-menu {
+    background: $ui-bg-color;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.kl-pinch-overlay {
+    background: rgba(255, 255, 255, 0.5);
 }
