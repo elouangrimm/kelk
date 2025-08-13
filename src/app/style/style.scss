@@ -1,5 +1,5 @@
 /* --- entrypoint for app ---*/
-@import './dark';
+@use './dark';
 
 // The styles below will only apply if the user's OS is set to a light theme.
 @media (prefers-color-scheme: light) {
